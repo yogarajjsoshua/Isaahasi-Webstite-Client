@@ -1,0 +1,212 @@
+/* Her Story Page Styles */
+
+.her-story-page {
+  width: 100%;
+}
+
+/* Hero Section */
+.hero-section {
+  width: 100%;
+  height: 402px;
+  overflow: hidden;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Stories Section */
+.stories-section {
+  width: 100%;
+  background-color: var(--color-primary);
+  padding: 80px 144px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+}
+
+/* Story Card */
+.story-card {
+  width: 100%;
+  max-width: 1152px;
+  background-color: #fff;
+  border-radius: 34px;
+  padding: 48px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.story-card-content {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+}
+
+.story-image {
+  flex: 0 0 auto;
+  width: 280px;
+  height: 280px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.story-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.story-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.story-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.story-name {
+  font-family: var(--font-outfit);
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-primary);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.story-subtitle {
+  font-family: var(--font-jost);
+  font-size: 18px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.story-divider {
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-primary);
+  position: relative;
+}
+
+.story-divider::before,
+.story-divider::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.story-divider::before {
+  left: -6px;
+}
+
+.story-divider::after {
+  right: -6px;
+}
+
+.story-body {
+  font-family: var(--font-open-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.story-body p {
+  margin: 0 0 16px;
+}
+
+.story-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .stories-section {
+    padding: 64px 48px;
+  }
+
+  .story-card {
+    padding: 40px 48px;
+  }
+
+  .story-card-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .story-image {
+    width: 240px;
+    height: 240px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    height: 300px;
+  }
+
+  .stories-section {
+    padding: 48px 24px;
+    gap: 32px;
+  }
+
+  .story-card {
+    padding: 32px 24px;
+    gap: 24px;
+  }
+
+  .story-card-content {
+    gap: 32px;
+  }
+
+  .story-image {
+    width: 200px;
+    height: 200px;
+  }
+
+  .story-name {
+    font-size: 32px;
+  }
+
+  .story-subtitle {
+    font-size: 16px;
+  }
+
+  .story-body {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    height: 250px;
+  }
+
+  .story-image {
+    width: 100%;
+    height: 200px;
+  }
+
+  .story-name {
+    font-size: 28px;
+  }
+}

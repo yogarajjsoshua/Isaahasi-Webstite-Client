@@ -1,0 +1,10 @@
+export { HomePage } from './HomePage';
+export { OurStoryPage } from './OurStoryPage';
+export { OurTeam } from './OurTeam';
+export { HerStory } from './HerStory';
+export { OurWork } from './OurWork';
+export { VisionPage } from './VisionPage';
+export { UpdatesPage } from './UpdatesPage';
+export { PartnerPage } from './PartnerPage';
+export { VolunteerPage } from './VolunteerPage';
+export { PrivacyPolicyPage } from './PrivacyPolicyPage';

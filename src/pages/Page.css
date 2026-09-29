@@ -1,0 +1,51 @@
+/* Base page styles */
+.page {
+  min-height: calc(100vh - 174px - 408px);
+}
+
+.page-hero {
+  background: linear-gradient(135deg, var(--color-bg-teal) 0%, var(--color-bg-primary) 100%);
+  padding: var(--spacing-4xl) 0;
+  text-align: center;
+}
+
+.page-hero-title {
+  font-size: var(--font-h1-size);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.page-hero-subtitle {
+  font-size: var(--font-body-large-size);
+  color: var(--color-text-secondary);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.page-content {
+  padding: var(--section-padding-desktop);
+}
+
+@media (max-width: 1024px) {
+  .page-content {
+    padding: var(--section-padding-tablet);
+  }
+}
+
+@media (max-width: 768px) {
+  .page {
+    min-height: calc(100vh - 80px - 300px);
+  }
+
+  .page-hero {
+    padding: var(--spacing-2xl) 0;
+  }
+
+  .page-hero-title {
+    font-size: 36px;
+  }
+
+  .page-content {
+    padding: var(--section-padding-mobile);
+  }
+}

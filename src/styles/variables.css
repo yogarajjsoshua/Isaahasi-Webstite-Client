@@ -1,0 +1,113 @@
+:root {
+  /* Primary Colors - From Figma */
+  --color-primary: #5a8b86;
+  --color-primary-dark: #24493f;
+  --color-primary-light: #a4c9bf;
+  --color-teal-bg: #d9ebe6;
+  --color-teal-dark: #1f5550;
+  --color-beige: #fbf5ee;
+
+  /* Background */
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F5F5F5;
+  --color-bg-teal: #d9ebe6;
+
+  /* Text */
+  --color-text-primary: #000000;
+  --color-text-secondary: rgba(0, 0, 0, 0.5);
+  --color-text-tertiary: rgba(0, 0, 0, 0.33);
+  --color-text-light: #FFFFFF;
+  --color-text-gray: #b7b7b7;
+  --color-text-footer: #f0f0f0;
+
+  /* Interactive */
+  --color-button-primary: #00BFA5;
+  --color-button-hover: #00897B;
+  --color-input-border: #E0E0E0;
+  --color-input-focus: #00BFA5;
+
+  /* Status */
+  --color-error: #F44336;
+  --color-success: #4CAF50;
+  --color-warning: #FF9800;
+
+  /* Font Families - From Figma */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-outfit: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-open-sans: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-lora: 'Lora', Georgia, serif;
+  --font-jost: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-poppins: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Headings - size / line-height */
+  --font-h1-size: 82px;
+  --font-h1-line: 102px;
+  --font-h2-size: 64px;
+  --font-h2-line: 40px;
+  --font-h3-size: 48px;
+  --font-h3-line: 61px;
+  --font-h4-size: 40px;
+  --font-h4-line: 40px;
+  --font-h5-size: 32px;
+  --font-h5-line: 32px;
+  --font-h6-size: 24px;
+  --font-h6-line: 40px;
+
+  /* Body */
+  --font-body-large-size: 18px;
+  --font-body-large-line: 28px;
+  --font-body-size: 16px;
+  --font-body-line: 24px;
+  --font-body-small-size: 14px;
+  --font-body-small-line: 20px;
+
+  /* Special */
+  --font-button-size: 16px;
+  --font-button-line: 24px;
+  --font-input-size: 16px;
+  --font-input-line: 24px;
+  --font-caption-size: 12px;
+  --font-caption-line: 16px;
+
+  /* Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Spacing Scale */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+  --spacing-4xl: 96px;
+
+  /* Section Padding */
+  --section-padding-mobile: 48px 24px;
+  --section-padding-tablet: 64px 40px;
+  --section-padding-desktop: 96px 80px;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+
+  /* Breakpoints */
+  --breakpoint-xs: 375px;
+  --breakpoint-sm: 390px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1440px;
+}
