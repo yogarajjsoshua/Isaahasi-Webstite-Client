@@ -1,94 +1,139 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { DonateModal } from '../DonateModal';
 import './Header.css';
 
-const imgMenuItemArrow = "https://www.figma.com/api/mcp/asset/dd428b18-b365-4982-bbd2-00e48037aa98.svg";
-const imgIndiaLogoIsaahasiAcademyIndiaFoundation4 = "https://www.figma.com/api/mcp/asset/1a27d586-e469-4304-9803-7e437f539d91.png";
+const imgMenuItemArrow = "https://www.figma.com/api/mcp/asset/0b3a0107-57ae-4c75-bff4-a4c104608159.svg";
+const imgIndiaLogoIsaahasiAcademyIndiaFoundation4 = "https://www.figma.com/api/mcp/asset/8c0af3fd-7f4c-46cc-a65b-27a1d16e371c.png";
 
-type DonateProps = {
-  className?: string;
+type DropdownItem = {
+  label: string;
+  path?: string;
+  onClick?: () => void;
 };
-
-function Donate({ className }: DonateProps) {
-  return (
-    <button className={`${className} bg-[#5a8b86] flex items-center justify-center`}>
-      <span className="font-['Inter',sans-serif] font-medium text-[22px] text-white">
-        Donate
-      </span>
-    </button>
-  );
-}
 
 type MenuItemProps = {
-  className?: string;
-  text?: string;
-  type?: "regular" | "dropdown_parent";
+  text: string;
+  isActive?: boolean;
+  dropdownItems?: DropdownItem[];
 };
 
-function MenuItem({ className, text = "Menu Item", type = "regular" }: MenuItemProps) {
-  const isDropdownParent = type === "dropdown_parent";
+function MenuItem({ text, isActive = false, dropdownItems }: MenuItemProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div className={className}>
-      <span className="font-['Outfit',sans-serif] font-normal text-[22px] text-[rgba(0,0,0,0.5)] whitespace-nowrap">
+    <div
+      className="menu-item-wrapper"
+      onMouseEnter={() => dropdownItems && setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+    >
+      <span className={`menu-item-text ${isActive ? 'menu-item-text--active' : ''}`}>
         {text}
       </span>
-      {isDropdownParent && (
-        <div className="absolute right-[12px] top-1/2 -translate-y-1/2 w-[15px] h-[8px] flex items-center justify-center">
-          <div className="rotate-90 w-[8px] h-[15px]">
-            <img alt="" className="w-full h-full" src={imgMenuItemArrow} />
+      {dropdownItems && (
+        <>
+          <div className="menu-item-arrow">
+            <img alt="" src={imgMenuItemArrow} />
           </div>
-        </div>
+          {isOpen && (
+            <div className="dropdown-menu">
+              {dropdownItems.map((item, index) => (
+                item.path ? (
+                  <Link
+                    key={index}
+                    to={item.path}
+                    className="dropdown-item"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <button
+                    key={index}
+                    className="dropdown-item"
+                    onClick={() => {
+                      item.onClick?.();
+                      setIsOpen(false);
+                    }}
+                  >
+                    {item.label}
+                  </button>
+                )
+              ))}
+            </div>
+          )}
+        </>
       )}
     </div>
   );
 }
 
 export const Header: React.FC = () => {
+  const location = useLocation();
+  const [isDonateModalOpen, setIsDonateModalOpen] = useState(false);
+
+  const aboutUsItems: DropdownItem[] = [
+    { label: 'Our Story', path: '/our-story' },
+    { label: 'Our Team', path: '/our-team' },
+    { label: 'Vision', path: '/vision' }
+  ];
+
+  const ourWorkItems: DropdownItem[] = [
+    { label: 'Our Work', path: '/our-work' }
+  ];
+
+  const storiesItems: DropdownItem[] = [
+    { label: 'Her Story', path: '/her-story' },
+    { label: 'Updates', path: '/updates' }
+  ];
+
+  const getInvolvedItems: DropdownItem[] = [
+    { label: 'Volunteer', path: '/volunteer' },
+    { label: 'Partner with Us', path: '/partner' },
+    { label: 'Donate', onClick: () => setIsDonateModalOpen(true) }
+  ];
+
   return (
-    <header className="w-full h-[174px] bg-white" style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, boxShadow: '0px 3px 8px rgba(31, 85, 80, 0.24)' }}>
-      {/* Logo Section - White Background */}
-      <div className="w-full h-[112px] bg-white relative flex items-center justify-center">
-        <div className="w-[246px] h-[94px] relative overflow-hidden">
-          <img
-            alt="iSAAHASi Academy India Foundation"
-            className="absolute left-0 w-full"
-            style={{
-              top: '-78.19%',
-              height: '339.89%',
-              maxWidth: 'none'
-            }}
-            src={imgIndiaLogoIsaahasiAcademyIndiaFoundation4}
-          />
+    <>
+      <header className="header-wrapper">
+        {/* Logo Section */}
+        <div className="header-logo-section">
+          <Link to="/" className="header-logo">
+            <img
+              alt="iSAAHASi Academy India Foundation"
+              src={imgIndiaLogoIsaahasiAcademyIndiaFoundation4}
+            />
+          </Link>
         </div>
-      </div>
 
-      {/* Navigation Bar - Light Green Background */}
-      <div className="w-full h-[62px] bg-[#d9ebe6] relative flex items-center justify-center">
-        <div className="flex items-center gap-[50px]">
-          <a className="flex items-center justify-center px-[20px] py-[16px]">
-            <span className="font-['Outfit',sans-serif] font-normal text-[22px] text-[rgba(0,0,0,0.5)] whitespace-nowrap">
-              Home
-            </span>
-          </a>
-          <MenuItem className="flex gap-[10px] items-start px-[20px] py-[16px] relative rounded-[8px] w-[153px]" text="About Us" type="dropdown_parent" />
-          <button className="flex gap-[10px] items-start px-[20px] py-[16px] relative rounded-[8px] w-[153px]">
-            <span className="font-['Outfit',sans-serif] font-normal text-[22px] text-[rgba(0,0,0,0.5)] whitespace-nowrap">
-              Our Work
-            </span>
-            <div className="absolute right-[12px] top-1/2 -translate-y-1/2 w-[15px] h-[8px] flex items-center justify-center">
-              <div className="rotate-90 w-[8px] h-[15px]">
-                <img alt="" className="w-full h-full" src={imgMenuItemArrow} />
-              </div>
-            </div>
+        {/* Navigation Bar */}
+        <nav className="header-nav">
+          <div className="header-menu-items">
+            <Link to="/" className="menu-item-wrapper">
+              <span className={`menu-item-text ${location.pathname === '/' ? 'menu-item-text--active' : ''}`}>
+                Home
+              </span>
+            </Link>
+            <MenuItem text="About Us" dropdownItems={aboutUsItems} />
+            <MenuItem text="Our Work" dropdownItems={ourWorkItems} />
+            <MenuItem text="Stories" dropdownItems={storiesItems} />
+            <MenuItem text="Get Involved" dropdownItems={getInvolvedItems} />
+          </div>
+
+          {/* Donate Button */}
+          <button
+            className="header-donate-button"
+            onClick={() => setIsDonateModalOpen(true)}
+          >
+            Donate
           </button>
-          <MenuItem className="flex gap-[10px] items-start px-[20px] py-[16px] relative rounded-[8px] w-[153px]" text="Stories" type="dropdown_parent" />
-          <MenuItem className="flex gap-[10px] items-start px-[20px] py-[16px] relative rounded-[8px] w-[185px]" text="Get Involved " type="dropdown_parent" />
-        </div>
+        </nav>
+      </header>
 
-        {/* Donate Button - Right Side */}
-        <div className="absolute right-0 top-0 h-full">
-          <Donate className="h-[62px] w-[197px]" />
-        </div>
-      </div>
-    </header>
+      {/* Donate Modal */}
+      {isDonateModalOpen && (
+        <DonateModal onClose={() => setIsDonateModalOpen(false)} />
+      )}
+    </>
   );
 };
