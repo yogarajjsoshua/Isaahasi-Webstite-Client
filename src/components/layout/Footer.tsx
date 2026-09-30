@@ -1,14 +1,14 @@
 import React from 'react';
 import './Footer.css';
 
-const isahasiLogoFooter = "https://www.figma.com/api/mcp/asset/722e1877-da44-4916-830f-96e892fe8598.png";
-const instagramIcon = "https://www.figma.com/api/mcp/asset/e71cfb92-f985-4be8-ab61-50de038530f1.svg";
-const linkedinIcon = "https://www.figma.com/api/mcp/asset/ff8dc3c7-3071-4d2e-b2cb-b3774475334f.svg";
+const isahasiLogoFooter = "https://www.figma.com/api/mcp/asset/335a9e3a-d438-4700-93a6-f57c5d608f9e.png";
+const instagramIcon = "https://www.figma.com/api/mcp/asset/fa5c1f9e-f9d9-4ac3-a264-3249b37abbc7.svg";
+const linkedinIcon = "https://www.figma.com/api/mcp/asset/9d11f792-c463-48bf-be6c-5e2ae27c27d1.svg";
 
 export const Footer: React.FC = () => {
   return (
     <footer className="footer-wrapper">
-      <div className="footer-container">
+      <div className="footer-top">
         {/* Left Section - About */}
         <div className="footer-about">
           <ul className="footer-info-list">
@@ -30,12 +30,12 @@ export const Footer: React.FC = () => {
 
         {/* Center Section - Get Involved */}
         <div className="footer-get-involved">
-          <h3 className="footer-section-title">GET INVOLVED</h3>
+          <h3 className="footer-section-title">Get involved</h3>
           <ul className="footer-links">
             <li><a href="#">Reports and Compliance</a></li>
             <li><a href="#">Fundraise, Sponsor, Partner</a></li>
             <li><a href="#">Careers</a></li>
-            <li><button>Donate</button></li>
+            <li><button type="button">Donate</button></li>
           </ul>
         </div>
 
@@ -56,7 +56,7 @@ export const Footer: React.FC = () => {
       </div>
 
       {/* Divider */}
-      <div className="footer-divider"></div>
+      <div className="footer-divider" />
 
       {/* Bottom Section */}
       <div className="footer-bottom">

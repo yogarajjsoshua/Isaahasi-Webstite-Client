@@ -2,6 +2,8 @@
 
 .homepage {
   width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 /* Hero Carousel */
@@ -452,6 +454,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 48px;
+  max-width: 953px;
+  margin: 0 auto;
 }
 
 .newsletter-text {
