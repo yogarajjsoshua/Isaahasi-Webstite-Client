@@ -2,6 +2,8 @@
 
 .her-story-page {
   width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 /* Hero Section */
@@ -31,41 +33,34 @@
 
 /* Story Card */
 .story-card {
+  position: relative;
   width: 100%;
   max-width: 1152px;
   background-color: #fff;
-  border-radius: 34px;
-  padding: 48px 64px;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-.story-card-content {
-  display: flex;
-  gap: 48px;
-  align-items: flex-start;
-}
-
-.story-image {
-  flex: 0 0 auto;
-  width: 280px;
-  height: 280px;
-  border-radius: 16px;
+  border-radius: 23px;
+  box-shadow: 0px 4px 30px 10px rgba(0, 0, 0, 0.09);
   overflow: hidden;
 }
 
-.story-image img {
+.story-card-bg {
+  position: absolute;
+  inset: 0;
+}
+
+.story-card-bg-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
+  opacity: 0.15;
 }
 
-.story-text {
-  flex: 1;
+.story-card-content {
+  position: relative;
+  padding: 64px 96px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 28px;
 }
 
 .story-header {
@@ -87,51 +82,30 @@
 .story-subtitle {
   font-family: var(--font-jost);
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 500;
   font-style: italic;
   line-height: 1.4;
-  color: var(--color-text-primary);
+  color: rgba(0, 0, 0, 0.47);
   margin: 0;
 }
 
 .story-divider {
   width: 100%;
-  height: 2px;
-  background-color: var(--color-primary);
-  position: relative;
-}
-
-.story-divider::before,
-.story-divider::after {
-  content: '';
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  background-color: var(--color-primary);
-  border-radius: 50%;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.story-divider::before {
-  left: -6px;
-}
-
-.story-divider::after {
-  right: -6px;
+  height: auto;
+  display: block;
 }
 
 .story-body {
   font-family: var(--font-open-sans);
   font-size: 16px;
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 22px;
+  text-align: justify;
   color: var(--color-text-primary);
-  margin: 0;
 }
 
 .story-body p {
-  margin: 0 0 16px;
+  margin: 0 0 17px;
 }
 
 .story-body p:last-child {
@@ -144,18 +118,8 @@
     padding: 64px 48px;
   }
 
-  .story-card {
-    padding: 40px 48px;
-  }
-
   .story-card-content {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .story-image {
-    width: 240px;
-    height: 240px;
+    padding: 48px 56px;
   }
 }
 
@@ -169,18 +133,9 @@
     gap: 32px;
   }
 
-  .story-card {
-    padding: 32px 24px;
-    gap: 24px;
-  }
-
   .story-card-content {
-    gap: 32px;
-  }
-
-  .story-image {
-    width: 200px;
-    height: 200px;
+    padding: 40px 32px;
+    gap: 24px;
   }
 
   .story-name {
@@ -201,9 +156,8 @@
     height: 250px;
   }
 
-  .story-image {
-    width: 100%;
-    height: 200px;
+  .story-card-content {
+    padding: 32px 20px;
   }
 
   .story-name {
