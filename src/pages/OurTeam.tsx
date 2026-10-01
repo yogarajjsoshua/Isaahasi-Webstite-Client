@@ -1,17 +1,15 @@
 import React from 'react';
 import './OurTeam.css';
-
-// Image assets from Figma
-const teamHeroImage = "https://www.figma.com/api/mcp/asset/e0716925-49cb-479e-8560-f6d42a0cccac.png";
-const photoKavi = "https://www.figma.com/api/mcp/asset/6758b50d-7a24-4799-89d4-d37d7d8a3247.png";
-const photoRenjan = "https://www.figma.com/api/mcp/asset/4aabf22f-5441-42fb-bb55-ff2e272d83f4.png";
-const photoKoshy = "https://www.figma.com/api/mcp/asset/2323a350-647b-4a48-812e-0d1f01b12ba0.png";
-const photoVeena = "https://www.figma.com/api/mcp/asset/a169fb7a-225d-46ae-8341-a2954c588936.png";
-const photoSonal = "https://www.figma.com/api/mcp/asset/f4631e9f-429a-4c8c-a666-82de6c26ba3e.png";
-const photoAtiya = "https://www.figma.com/api/mcp/asset/f4631e9f-429a-4c8c-a666-82de6c26ba3e.png";
-const frameImage1 = "https://www.figma.com/api/mcp/asset/d9c0e6b0-8214-4027-8a4b-2402d6048bb6.svg";
-const frameImage2 = "https://www.figma.com/api/mcp/asset/7ac3d423-bd5c-46df-aa12-c88f001e0299.svg";
-const frameImage3 = "https://www.figma.com/api/mcp/asset/9415ee06-86b3-41b4-9d2e-855f1ea0ca2f.svg";
+import teamHeroImage from '../assets/images/team/hero.jpg';
+import photoKavi from '../assets/images/team/photo-kavi.jpg';
+import photoRenjanKoshy from '../assets/images/team/photo-renjan-koshy.jpg';
+import photoVeena from '../assets/images/team/photo-veena.jpg';
+import photoSonal from '../assets/images/team/photo-sonal.jpg';
+import photoAtiya from '../assets/images/team/photo-atiya.jpg';
+import frameBoard from '../assets/images/team/frame-board.svg';
+import frameVeena from '../assets/images/team/frame-veena.svg';
+import frameSonal from '../assets/images/team/frame-sonal.svg';
+import frameAtiya from '../assets/images/team/frame-atiya.svg';
 
 interface TeamMember {
   name: string;
@@ -30,21 +28,21 @@ export const OurTeam: React.FC = () => {
 
 From a young age, Kavi has had a heart for serving people on the margins of society. Moved by compassion and a deep belief that every human being has inherent worth, he has sought opportunities to walk alongside others and become involved in initiatives that bring hope to vulnerable communities. He is passionate about supporting work that restores hope, upholds human dignity, and empowers individuals and families to flourish.`,
       photo: photoKavi,
-      frame: frameImage1
+      frame: frameBoard
     },
     {
       name: "Mr. Renjan Oommen",
       title: "",
       bio: `Renjan is a retired Naval Officer and former procurement leader at Maersk and has  had over 24 years of rich and diverse experience in the area of Leadership, Procurement, Consulting, Armed forces and Social sector covering Defence, Shipping and Life sciences Industries. He has delivered strong results by leading teams, projects, and categories across a diverse spectrum of industries bringing significant business value, effectiveness, and impact at both strategic and tactical levels. Alongside his corporate and social sector engagement, he has been in pastoral care for the last 12 years building and empowering people at a different realm.`,
-      photo: photoRenjan,
-      frame: frameImage1
+      photo: photoRenjanKoshy,
+      frame: frameBoard
     },
     {
       name: "Dr. Koshy George",
       title: "",
       bio: `Renjan is a retired Naval Officer and former procurement leader at Maersk and has  had over 24 years of rich and diverse experience in the area of Leadership, Procurement, Consulting, Armed forces and Social sector covering Defence, Shipping and Life sciences Industries. He has delivered strong results by leading teams, projects, and categories across a diverse spectrum of industries bringing significant business value, effectiveness, and impact at both strategic and tactical levels. Alongside his corporate and social sector engagement, he has been in pastoral care for the last 12 years building and empowering people at a different realm.`,
-      photo: photoKoshy,
-      frame: frameImage1
+      photo: photoRenjanKoshy,
+      frame: frameBoard
     }
   ];
 
@@ -54,21 +52,21 @@ From a young age, Kavi has had a heart for serving people on the margins of soci
       title: "Programme Manager",
       bio: `Veena Rodrigues is the Program Manager at iSaahasi Academy India Foundation, where she is passionate about empowering women to rebuild their lives through education, life skills, and sustainable livelihood opportunities. She holds a Master's degree in Commerce (M.Com.) and is PMP® certified. With over nine years of experience across the corporate and social development sectors, Veena has built expertise in program management, stakeholder engagement, monitoring and evaluation, and process improvement. She believes in creating safe, supportive spaces where every woman can discover her strengths, build confidence, and move towards a future of independence and dignity. Through compassionate leadership and collaborative partnerships, she is committed to creating meaningful and lasting social impact.`,
       photo: photoVeena,
-      frame: frameImage1
+      frame: frameVeena
     },
     {
       name: "Sonal Pandya",
       title: "Finance & Admin",
       bio: `I have been with I-Sanctuary for 4 and half years, as an Finance & Administrative Coordinator. My professional background includes serving as an Account and Audit Assistant at a Chartered Accountancy firm, (CA)  alongside extensive experience lecturing for professional courses like CA, Company Secretary , and Masters in Business Administration.  With a passion for numbers and helping others grow, I blend financial expertise with a dedication to the iSanctuary mission.`,
       photo: photoSonal,
-      frame: frameImage2
+      frame: frameSonal
     },
     {
       name: "Atiya Rawat",
       title: "Educator",
       bio: ` A social changemaker and educator with nearly a decade of experience empowering marginalized communities through education. A Teach For India Fellow and curriculum designer, she specializes in creating transformative learning experiences for underserved youth, combining innovation with compassion to drive lasting impact. As an educator with Isaahasi Academy India Foundation, she thrives in a collaborative environment where the work is deeply meaningful.`,
       photo: photoAtiya,
-      frame: frameImage3
+      frame: frameAtiya
     }
   ];
 
