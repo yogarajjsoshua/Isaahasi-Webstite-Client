@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Input } from '../components/ui';
 import { formService } from '../services/formService';
 import type { PartnerFormData } from '../types';
+import heroCollage from '../assets/images/partner/hero-collage.jpg';
+import infoImage1 from '../assets/images/partner/info-1.jpg';
+import infoImage2 from '../assets/images/partner/info-2.jpg';
+import infoImage3 from '../assets/images/partner/info-3.jpg';
 import './PartnerPage.css';
 
 export const PartnerPage: React.FC = () => {
@@ -62,97 +66,106 @@ export const PartnerPage: React.FC = () => {
     }
   };
 
-  const heroImage = "https://www.figma.com/api/mcp/asset/e8b7c6d5-a4f3-2g1h-0i9j-8k7l6m5n4o3p.png";
-
   return (
     <div className="partner-page">
-      {/* Hero Section */}
       <section className="partner-hero">
-        <img src={heroImage} alt="Partner with Us" className="partner-hero-image" />
-        <div className="partner-hero-content">
-          <h1 className="partner-hero-title">Partner with Us</h1>
+        <div className="partner-hero-inner">
+          <h1 className="partner-hero-title">Ready to make a change?</h1>
+          <img src={heroCollage} alt="Hands joined in partnership" className="partner-hero-image" />
         </div>
       </section>
 
-      {/* Form Section */}
+      <section className="partner-info">
+        <ul className="partner-info-list">
+          <li>If you are a Non Government Organization that works with women survivors of trafficking, we can partner to strengthen the rehabilitation of the women</li>
+          <li>If you are a corporate looking to volunteer your time, resources and opportunities</li>
+        </ul>
+        <div className="partner-info-images">
+          <img src={infoImage1} alt="" />
+          <img src={infoImage2} alt="" />
+          <img src={infoImage3} alt="" />
+        </div>
+      </section>
+
       <section className="partner-form-section">
-        <div className="partner-form-container">
-          <div className="partner-form-intro">
-            <h2 className="partner-form-title">Join Our Mission</h2>
-            <p className="partner-form-description">
-              Together, we can create lasting change. Partner with us to empower survivors
-              of trafficking and help them build lives of dignity and hope.
-            </p>
+        <form onSubmit={handleSubmit} className="partner-form">
+          <Input
+            id="fullName"
+            name="fullName"
+            label="Enter Full Name"
+            placeholder="Enter Name"
+            required
+            value={formData.fullName}
+            onChange={(value) => handleChange('fullName', value)}
+            error={errors.fullName}
+          />
+
+          <Input
+            id="organisationName"
+            name="organisationName"
+            label="Name of Organisation (Corporate / NGO)"
+            placeholder="Enter Organisation"
+            required
+            value={formData.organisationName}
+            onChange={(value) => handleChange('organisationName', value)}
+            error={errors.organisationName}
+          />
+
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            label="Enter Email Address"
+            placeholder="Enter Email ID"
+            required
+            value={formData.email}
+            onChange={(value) => handleChange('email', value)}
+            error={errors.email}
+          />
+
+          <div className="input-wrapper">
+            <label htmlFor="mobileNumber" className="input-label">
+              Mobile Number<span className="input-required">*</span>
+            </label>
+            <div className="mobile-input-row">
+              <span className="mobile-prefix">+91</span>
+              <input
+                id="mobileNumber"
+                name="mobileNumber"
+                type="tel"
+                placeholder="Enter Mobile Number"
+                required
+                value={formData.mobileNumber}
+                onChange={(e) => handleChange('mobileNumber', e.target.value)}
+                className={`input-field mobile-input-field ${errors.mobileNumber ? 'input-error' : ''}`}
+              />
+            </div>
+            {errors.mobileNumber && <span className="input-error-message">{errors.mobileNumber}</span>}
           </div>
 
-          <form onSubmit={handleSubmit} className="partner-form">
-            <Input
-              id="fullName"
-              name="fullName"
-              label="Full Name"
-              required
-              value={formData.fullName}
-              onChange={(value) => handleChange('fullName', value)}
-              error={errors.fullName}
-            />
+          <Input
+            id="message"
+            name="message"
+            type="textarea"
+            label="How would you like to Partner with Us"
+            placeholder="Describe in 80-100 words"
+            required
+            value={formData.message}
+            onChange={(value) => handleChange('message', value)}
+            error={errors.message}
+            rows={6}
+          />
 
-            <Input
-              id="organisationName"
-              name="organisationName"
-              label="Organisation Name"
-              required
-              value={formData.organisationName}
-              onChange={(value) => handleChange('organisationName', value)}
-              error={errors.organisationName}
-            />
+          {message && (
+            <div className={`form-message form-message--${message.type}`}>
+              {message.text}
+            </div>
+          )}
 
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              label="Email Address"
-              required
-              value={formData.email}
-              onChange={(value) => handleChange('email', value)}
-              error={errors.email}
-            />
-
-            <Input
-              id="mobileNumber"
-              name="mobileNumber"
-              type="tel"
-              label="Mobile Number"
-              placeholder="+91 XXXXXXXXXX"
-              required
-              value={formData.mobileNumber}
-              onChange={(value) => handleChange('mobileNumber', value)}
-              error={errors.mobileNumber}
-            />
-
-            <Input
-              id="message"
-              name="message"
-              type="textarea"
-              label="How would you like to Partner"
-              placeholder="Tell us about your partnership ideas..."
-              required
-              value={formData.message}
-              onChange={(value) => handleChange('message', value)}
-              error={errors.message}
-              rows={6}
-            />
-
-            {message && (
-              <div className={`form-message form-message--${message.type}`}>
-                {message.text}
-              </div>
-            )}
-
-            <button type="submit" className="form-submit-button" disabled={loading}>
-              {loading ? 'Submitting...' : 'Submit'}
-            </button>
-          </form>
-        </div>
+          <button type="submit" className="form-submit-button" disabled={loading}>
+            {loading ? 'Submitting...' : 'SUBMIT'}
+          </button>
+        </form>
       </section>
     </div>
   );
