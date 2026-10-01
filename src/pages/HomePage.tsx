@@ -86,21 +86,12 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* Mission Section with Image */}
-      <section className="mission-section">
-        <div className="mission-image">
-          <img
-            src={img2360}
-            alt="Together, to help her succeed"
-            width="600"
-            height="400"
-            loading="lazy"
-          />
-        </div>
-        <div className="mission-content">
-          <h1 className="mission-title">
+      <section className="home-mission-section">
+        <div className="home-mission-content">
+          <h1 className="home-mission-title">
             Together, to help <span className="text-teal">her</span> succeed, whatever it takes!
           </h1>
-          <div className="mission-text">
+          <div className="home-mission-text">
             <p>
               We believe that for every survivor of trafficking, being rescued is the first step of the journey to freedom. The lasting impact of exploitation runs deep - affecting self-worth, confidence, relationships, and the ability to imagine a different future.
             </p>
@@ -108,6 +99,15 @@ export const HomePage: React.FC = () => {
               <strong>iSaahasi bridges this gap</strong> - walking alongside the women as they rebuild their lives with hope and dignity, growing them into capable, strong, confident and secure individuals.
             </p>
           </div>
+        </div>
+        <div className="home-mission-image">
+          <img
+            src={img2360}
+            alt="Together, to help her succeed"
+            width="600"
+            height="400"
+            loading="lazy"
+          />
         </div>
       </section>
 

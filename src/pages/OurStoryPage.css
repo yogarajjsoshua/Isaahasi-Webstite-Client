@@ -2,20 +2,23 @@
 
 .our-story-page {
   width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 /* Hero Section */
-.hero-section {
+.story-hero-section {
   position: relative;
   width: 100%;
   height: 309px;
   overflow: hidden;
 }
 
-.hero-image {
+.story-hero-image {
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  /* object-fit: cover; */
   object-position: center;
 }
 
@@ -34,9 +37,9 @@
 
 .intro-title {
   font-family: var(--font-outfit);
-  font-size: 36px;
+  font-size: 40px;
   font-weight: 600;
-  line-height: 45px;
+  line-height: 50px;
   color: var(--color-primary);
   text-transform: uppercase;
   margin: 0 0 48px;
@@ -45,9 +48,9 @@
 
 .intro-text {
   font-family: var(--font-open-sans);
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 400;
-  line-height: 48px;
+  line-height: 36px;
   color: var(--color-text-primary);
   margin: 0;
 }
@@ -211,12 +214,13 @@
   }
 
   .intro-title {
-    font-size: 32px;
+    font-size: 36px;
+    line-height: 45px;
   }
 
   .intro-text {
-    font-size: 28px;
-    line-height: 42px;
+    font-size: 22px;
+    line-height: 34px;
   }
 
   .timeline-item {
@@ -248,7 +252,7 @@
 }
 
 @media (max-width: 1024px) {
-  .hero-section {
+  .story-hero-section {
     height: 250px;
   }
 
@@ -258,13 +262,13 @@
   }
 
   .intro-title {
-    font-size: 28px;
-    line-height: 36px;
+    font-size: 32px;
+    line-height: 40px;
   }
 
   .intro-text {
-    font-size: 24px;
-    line-height: 36px;
+    font-size: 20px;
+    line-height: 30px;
   }
 
   .timeline-item {
@@ -320,7 +324,7 @@
 }
 
 @media (max-width: 768px) {
-  .hero-section {
+  .story-hero-section {
     height: 200px;
   }
 
@@ -330,14 +334,14 @@
   }
 
   .intro-title {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 28px;
+    line-height: 36px;
     margin-bottom: 32px;
   }
 
   .intro-text {
-    font-size: 20px;
-    line-height: 32px;
+    font-size: 18px;
+    line-height: 28px;
   }
 
   .timeline-line {

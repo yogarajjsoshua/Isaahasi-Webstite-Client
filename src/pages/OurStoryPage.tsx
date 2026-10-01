@@ -43,11 +43,11 @@ export const OurStoryPage: React.FC = () => {
   return (
     <div className="our-story-page">
       {/* Hero Section */}
-      <section className="hero-section">
-        <img 
-          src={imgRectangle70} 
-          alt="Our Story Hero" 
-          className="hero-image"
+      <section className="story-hero-section">
+        <img
+          src={imgRectangle70}
+          alt="Our Story Hero"
+          className="story-hero-image"
         />
       </section>
 

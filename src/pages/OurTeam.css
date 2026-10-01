@@ -2,6 +2,8 @@
 
 .our-team-page {
   width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
   background-color: #fff;
 }
 
@@ -18,7 +20,6 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.36;
 }
 
 /* Page Title */
@@ -26,26 +27,26 @@
   font-family: var(--font-outfit);
   font-size: 40px;
   font-weight: 600;
-  line-height: 102px;
+  line-height: 50px;
   color: var(--color-primary);
   text-align: left;
   text-transform: capitalize;
-  margin: 48px 0 48px 167px;
+  margin: 48px 144px 48px;
 }
 
 /* Section Divider */
 .section-divider {
-  width: calc(100% - 334px);
+  width: calc(100% - 288px);
   height: 2px;
   background-color: var(--color-primary);
-  margin: 0 167px 48px;
+  margin: 0 144px 48px;
 }
 
 /* Team Member Section */
 .team-member {
   display: flex;
   gap: 84px;
-  padding: 0 152px;
+  padding: 0 144px;
   margin-bottom: 96px;
   align-items: flex-start;
 }
@@ -64,8 +65,9 @@
 
 .team-member-photo {
   position: absolute;
-  left: 16.17%;
-  top: 15.16%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: 67.66%;
   height: 73.29%;
   border-radius: 50%;
@@ -111,11 +113,11 @@
   font-family: var(--font-outfit);
   font-size: 40px;
   font-weight: 600;
-  line-height: 102px;
+  line-height: 50px;
   color: var(--color-primary);
   text-align: left;
   text-transform: capitalize;
-  margin: 96px 0 48px 167px;
+  margin: 96px 144px 48px;
 }
 
 /* Responsive Design */
@@ -129,6 +131,8 @@
   .staff-section-title {
     margin-left: 96px;
     margin-right: 96px;
+    font-size: 36px;
+    line-height: 45px;
   }
 
   .section-divider {
@@ -165,7 +169,8 @@
   .staff-section-title {
     margin-left: 48px;
     margin-right: 48px;
-    font-size: 36px;
+    font-size: 32px;
+    line-height: 40px;
   }
 
   .section-divider {
@@ -202,8 +207,8 @@
   .staff-section-title {
     margin-left: 24px;
     margin-right: 24px;
-    font-size: 32px;
-    line-height: 48px;
+    font-size: 28px;
+    line-height: 36px;
   }
 
   .section-divider {
