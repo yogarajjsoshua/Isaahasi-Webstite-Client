@@ -8,35 +8,38 @@ const imgSurekhaA31 = "https://www.figma.com/api/mcp/asset/dad4d27b-e350-49ff-81
 interface TimelineEvent {
   year: string;
   title: string;
-  description: string;
+  description?: string;
+  highlightBold?: string;
+  highlightText?: string;
 }
 
 export const OurStoryPage: React.FC = () => {
   const timelineEvents: TimelineEvent[] = [
     {
       year: "2007",
-      title: "Vision takes shape",
-      description: "The foundation's vision began to take form through research and community engagement."
+      title: "The vision takes shape",
+      description: "Our founders had been working closely with young women who were survivors of human trafficking, abuse, and other forms of exploitation, recognize the need to thoughtfully design learning programme that could help the women rebuild meaningful futures."
     },
     {
       year: "2014",
-      title: "Research & Learning",
-      description: "Extensive research and consultation with stakeholders to understand the needs of survivors."
+      title: "Research & Learning and Consultation",
+      description: "The vision evolved into a comprehensive model, connected with like-minded educators, social workers, and community leaders."
     },
     {
       year: "2015",
       title: "Programme Development",
-      description: "Development of comprehensive programmes focusing on education, health, community, and employment."
+      description: "Developed a learning model that respected each woman's unique educational journey while addressing their individual needs."
     },
     {
       year: "2016",
-      title: "Foundation Established",
-      description: "Official establishment of iSaahasi Academy India Foundation in June 2016."
+      title: "iSaahasi Academy India Foundation is Established",
+      highlightBold: "With the mission “Together, to help her succeed whatever it takes”,",
+      highlightText: " combining education, skilling and holistic support as a pathway to dignity, hope, freedom and lasting social change"
     },
     {
-      year: "2016 onwards",
+      year: "2016 Onwards",
       title: "Sustainable Transformation",
-      description: "Ongoing commitment to sustainable transformation and empowerment of survivors."
+      description: "iSaahasi continues to ensure that every women who joins the programme, receives high-quality education as well as a safe, respectful, and empowering community where they can learn, heal, and thrive."
     }
   ];
 
@@ -54,15 +57,16 @@ export const OurStoryPage: React.FC = () => {
       {/* Intro Section */}
       <section className="intro-section">
         <div className="intro-content">
-          <h1 className="intro-title">Our Story</h1>
+          <p className="story-section-label">Our Story</p>
           <p className="intro-text">
-            iSaahasi Academy India Foundation was established in June 2016 with a vision to empower survivors of trafficking through holistic support and sustainable transformation.
+            iSaahasi Academy India Foundation was established in June 2016 with the vision of creating educational opportunities for young women whose learning journeys had been interrupted due to challenging life circumstances.
           </p>
         </div>
       </section>
 
       {/* Timeline Section */}
       <section className="timeline-section">
+        <p className="story-section-label">The Beginning</p>
         <div className="timeline-container">
           <div className="timeline-line"></div>
           <div className="timeline-items">
@@ -71,9 +75,18 @@ export const OurStoryPage: React.FC = () => {
                 <div className="timeline-year">
                   <h2 className="timeline-year-text">{event.year}</h2>
                 </div>
+                <div className="timeline-dot"></div>
                 <div className="timeline-content">
                   <h3 className="timeline-content-title">{event.title}</h3>
-                  <p className="timeline-content-description">{event.description}</p>
+                  {event.description && (
+                    <p className="timeline-content-description">{event.description}</p>
+                  )}
+                  {event.highlightBold && (
+                    <p className="timeline-content-description">
+                      <strong>{event.highlightBold}</strong>
+                      {event.highlightText}
+                    </p>
+                  )}
                 </div>
               </div>
             ))}
@@ -84,21 +97,30 @@ export const OurStoryPage: React.FC = () => {
       {/* Quote with Image Section */}
       <section className="quote-with-image-section">
         <div className="quote-image-container">
-          <img 
-            src={imgSurekhaA31} 
-            alt="Education and Empowerment" 
+          <img
+            src={imgSurekhaA31}
+            alt="iSaahasi vision board"
             className="quote-image"
           />
         </div>
         <div className="quote-box">
           <div className="quote-box-content">
-            <h2 className="quote-box-title">
-              What <span className="text-dark-teal">She</span> has to say
-            </h2>
             <blockquote className="quote-box-text">
-              Education is not just about learning; it's about finding a pathway to dignity, independence, and a future we can build for ourselves.
+              At iSaahasi, education is more than acquiring knowledge&mdash;it is a pathway to dignity, hope, freedom, and lasting social change.
             </blockquote>
           </div>
+        </div>
+      </section>
+
+      {/* Closing Section */}
+      <section className="story-closing-section">
+        <div className="story-closing-content">
+          <p>
+            Today, iSaahasi continues to empower women through education, believing that every woman deserves the opportunity to learn, grow, and realize her full potential, regardless of her past circumstances.
+          </p>
+          <p>
+            Every woman who enters iSaahasi brings unique experiences, strengths, and aspirations. By combining education with mentorship, counselling, health care and holistic support, we help participants rediscover their potential, pursue meaningful opportunities, and become leaders in their families, workplaces, and communities.
+          </p>
         </div>
       </section>
     </div>
