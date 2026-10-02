@@ -64,10 +64,8 @@ export const VolunteerPage: React.FC = () => {
 
   return (
     <div className="volunteer-page">
-      <section
-        className="volunteer-hero"
-        style={{ backgroundImage: `url(${heroHands})` }}
-      >
+      <section className="volunteer-hero">
+        <img src={heroHands} alt="" className="volunteer-hero-image" />
         <h1 className="volunteer-hero-title">Ready to Volunteer?</h1>
       </section>
 

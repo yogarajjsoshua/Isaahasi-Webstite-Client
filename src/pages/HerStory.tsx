@@ -74,7 +74,13 @@ export const HerStory: React.FC = () => {
         {stories.map((story) => (
           <article key={story.name} className="story-card">
             <div className="story-card-bg" aria-hidden="true">
-              <img src={story.image} alt="" className="story-card-bg-image" />
+              <img
+                src={story.image}
+                alt=""
+                className={`story-card-bg-image${
+                  story.name === 'RUBY' ? ' story-card-bg-image--ruby' : ''
+                }`}
+              />
             </div>
             <div className="story-card-content">
               <div className="story-header">

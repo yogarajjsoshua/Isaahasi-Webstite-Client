@@ -17,7 +17,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: center 77%;
 }
 
 /* Stories Section */
@@ -51,8 +51,12 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
-  opacity: 0.15;
+  object-position: center 15%;
+  opacity: 0.20;
+}
+
+.story-card-bg-image--ruby {
+  object-position: center 40%;
 }
 
 .story-card-content {
