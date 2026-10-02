@@ -58,6 +58,7 @@
 /* Why Section */
 .our-work-why {
   padding: 96px 144px 64px;
+  scroll-margin-top: 174px;
 }
 
 .our-work-why-body {
@@ -143,6 +144,7 @@
 /* What We Do Section */
 .our-work-what {
   padding: 64px 144px;
+  scroll-margin-top: 174px;
 }
 
 .our-work-what-body {

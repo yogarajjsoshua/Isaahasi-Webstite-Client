@@ -122,15 +122,17 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* Testimonial Section */}
-      <section className="testimonial-section">
-        <div className="testimonial-content">
-          <h2 className="testimonial-title">
-            What <span className="text-dark-teal">She</span> has to say
-          </h2>
-          <blockquote className="testimonial-quote">
-            iSaahasi has given me the courage and confidence to believe in myself. And know my potential. I feel encouraged to keep growing by learning something new all the time.
-          </blockquote>
-          <p className="testimonial-author">- Disha</p>
+      <section className="testimonial-section-wrapper">
+        <div className="testimonial-section">
+          <div className="testimonial-content">
+            <h2 className="testimonial-title">
+              What <span className="text-dark-teal">She</span> has to say
+            </h2>
+            <blockquote className="testimonial-quote">
+              iSaahasi has given me the courage and confidence to believe in myself. And know my potential. I feel encouraged to keep growing by learning something new all the time.
+            </blockquote>
+            <p className="testimonial-author">- Disha</p>
+          </div>
         </div>
       </section>
 

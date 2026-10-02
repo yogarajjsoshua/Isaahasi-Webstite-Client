@@ -79,7 +79,8 @@ export const Header: React.FC = () => {
   ];
 
   const ourWorkItems: DropdownItem[] = [
-    { label: 'Our Work', path: '/our-work' }
+    { label: 'Why Isaahasi', path: '/our-work#our-work-why' },
+    { label: 'What we Do', path: '/our-work#our-work-what' }
   ];
 
   const storiesItems: DropdownItem[] = [

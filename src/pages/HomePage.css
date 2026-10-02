@@ -183,7 +183,14 @@
   margin-bottom: 0;
 }
 
-/* Testimonial Section */
+/* Testimonial Section Wrapper (white rectangle, full section width) */
+.testimonial-section-wrapper {
+  width: 100%;
+  background-color: #fff;
+  padding: 96px 0;
+}
+
+/* Testimonial Section (teal frame inside the wrapper) */
 .testimonial-section {
   width: 100%;
   min-height: 434px;

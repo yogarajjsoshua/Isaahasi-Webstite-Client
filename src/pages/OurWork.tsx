@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import imgRectangle77 from '../assets/images/our-work/hero-quote.jpg';
 import imgImg57832 from '../assets/images/our-work/bridge-photo.png';
 import imgRectangle102 from '../assets/images/our-work/education.jpg';
@@ -12,6 +13,34 @@ import imgFluentMdl2Health from '../assets/icons/our-work/health.svg';
 import imgFluentPeopleCommunity32Regular from '../assets/icons/our-work/community.svg';
 import imgBytesizeWork from '../assets/icons/our-work/work.svg';
 import './OurWork.css';
+
+const HEADER_OFFSET = 174;
+const SCROLL_DURATION_MS = 1400;
+
+function easeInOutQuad(t: number) {
+  return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+}
+
+let scrollAnimationFrame: number | null = null;
+
+function smoothScrollTo(targetY: number, duration: number) {
+  if (scrollAnimationFrame !== null) {
+    cancelAnimationFrame(scrollAnimationFrame);
+  }
+
+  const startY = window.scrollY;
+  const diff = targetY - startY;
+  let startTime: number | null = null;
+
+  function step(timestamp: number) {
+    if (startTime === null) startTime = timestamp;
+    const progress = Math.min((timestamp - startTime) / duration, 1);
+    window.scrollTo({ top: startY + diff * easeInOutQuad(progress), left: 0, behavior: 'instant' });
+    scrollAnimationFrame = progress < 1 ? requestAnimationFrame(step) : null;
+  }
+
+  scrollAnimationFrame = requestAnimationFrame(step);
+}
 
 const pillars = [
   {
@@ -37,6 +66,18 @@ const pillars = [
 ];
 
 export const OurWork: React.FC = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!location.hash) return;
+    const id = location.hash.slice(1);
+    const el = document.getElementById(id);
+    if (el) {
+      const targetY = el.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET;
+      smoothScrollTo(targetY, SCROLL_DURATION_MS);
+    }
+  }, [location.hash]);
+
   return (
     <div className="our-work">
       {/* Hero Section */}
@@ -50,7 +91,7 @@ export const OurWork: React.FC = () => {
       </section>
 
       {/* Why Section */}
-      <section className="our-work-why">
+      <section id="our-work-why" className="our-work-why">
         <h2 className="our-work-section-title">Why iSAAHASI?</h2>
         <div className="our-work-why-body">
           <p>The lasting impact of exploitation runs deep. Having lost their childhoods, as well as opportunity to complete their basic education, many live with complex physical, psychological, and emotional health challenges that can significantly hinder their recovery and overall well-being.</p>
@@ -85,7 +126,7 @@ export const OurWork: React.FC = () => {
       </section>
 
       {/* What We Do */}
-      <section className="our-work-what">
+      <section id="our-work-what" className="our-work-what">
         <h2 className="our-work-section-title">What We Do?</h2>
         <p className="our-work-what-body">
           {`Our growth-focused program is built around four core pillars of EDUCATION- HEALTH- COMMUNITY - EMPLOYMENT provides a foundation to grow in capacity, strength, confidence, and security.  `}
