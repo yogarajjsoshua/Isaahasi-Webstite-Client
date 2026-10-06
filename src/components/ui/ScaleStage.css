@@ -1,0 +1,12 @@
+.scale-stage-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.scale-stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+}
