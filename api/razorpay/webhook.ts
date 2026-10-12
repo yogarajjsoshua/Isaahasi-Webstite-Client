@@ -1,4 +1,4 @@
-import { validateWebhookSignature } from 'razorpay/dist/utils/razorpay-utils';
+import { validateWebhookSignature } from 'razorpay/dist/utils/razorpay-utils.js';
 
 interface RazorpayWebhookEvent {
   event: string;

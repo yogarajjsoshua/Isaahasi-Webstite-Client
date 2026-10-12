@@ -1,4 +1,4 @@
-import { validatePaymentVerification } from 'razorpay/dist/utils/razorpay-utils';
+import { validatePaymentVerification } from 'razorpay/dist/utils/razorpay-utils.js';
 
 interface VerifySubscriptionBody {
   razorpay_subscription_id: string;
