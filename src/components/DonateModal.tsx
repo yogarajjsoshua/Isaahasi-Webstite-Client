@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './DonateModal.css';
+import { paymentService, type DonationStatus } from '../services/paymentService';
 
 const imgRectangle20 = "https://www.figma.com/api/mcp/asset/45537811-86b5-4acc-9663-4c4ec6748a2f.png";
 const imgMaterialSymbolsClose = "https://www.figma.com/api/mcp/asset/75bf025c-288a-44f2-a7fd-055495830639.svg";
@@ -7,6 +8,8 @@ const imgMaterialSymbolsClose = "https://www.figma.com/api/mcp/asset/75bf025c-28
 type DonateModalProps = {
   onClose: () => void;
 };
+
+const BUSY_STATUSES: DonationStatus[] = ['creating', 'opening', 'processing', 'verifying'];
 
 export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
   const [selectedTab, setSelectedTab] = useState<'once' | 'monthly'>('once');
@@ -22,17 +25,85 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
     pan: ''
   });
 
-  const presetAmounts = [500, 1000, 5000];
+  const [status, setStatus] = useState<DonationStatus>('idle');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const presetAmounts = [500, 1000, 5000];
+  const isBusy = BUSY_STATUSES.includes(status);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Donation submitted:', {
-      type: selectedTab,
-      amount: selectedAmount || customAmount,
-      nationality,
-      ...formData
-    });
+
+    const amount = selectedAmount ?? Number(customAmount);
+
+    if (!paymentService.validateAmount(amount)) {
+      setErrorMessage('Please enter a valid donation amount.');
+      setStatus('failure');
+      return;
+    }
+
+    if (!paymentService.validatePAN(formData.pan.toUpperCase())) {
+      setErrorMessage('Please enter a valid PAN number.');
+      setStatus('failure');
+      return;
+    }
+
+    setErrorMessage(null);
+
+    await paymentService.initiateDonation(
+      {
+        amount,
+        type: selectedTab,
+        donor: {
+          fullName: formData.fullName,
+          email: formData.email,
+          mobileNumber: formData.mobile,
+          address: formData.address,
+          nationality,
+          panNumber: formData.pan.toUpperCase(),
+        },
+      },
+      (nextStatus, message) => {
+        setStatus(nextStatus);
+        setErrorMessage(message ?? null);
+      },
+    );
   };
+
+  if (status === 'success') {
+    return (
+      <div className="donate-modal-overlay" onClick={onClose}>
+        <div className="donate-modal-container" onClick={(e) => e.stopPropagation()}>
+          <div className="donate-modal-left">
+            <div className="donate-modal-image-overlay">
+              <img src={imgRectangle20} alt="" className="donate-modal-bg-image" />
+              <div className="donate-modal-gradient"></div>
+            </div>
+            <div className="donate-modal-hero-content">
+              <h1 className="donate-modal-hero-title">
+                THANK<br />
+                YOU<br />
+                FOR GIVING
+              </h1>
+            </div>
+          </div>
+          <div className="donate-modal-right">
+            <button className="donate-modal-close" onClick={onClose} aria-label="Close modal">
+              <img src={imgMaterialSymbolsClose} alt="Close" />
+            </button>
+            <div className="donate-success-content">
+              <p className="donate-success-message">
+                Your donation was successful. A confirmation has been sent to your email and mobile number.
+              </p>
+              <button type="button" className="donate-submit-btn" onClick={onClose}>
+                CLOSE
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="donate-modal-overlay" onClick={onClose}>
@@ -70,12 +141,14 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
             <button
               className={`donate-modal-tab ${selectedTab === 'once' ? 'donate-modal-tab--active' : ''}`}
               onClick={() => setSelectedTab('once')}
+              disabled={isBusy}
             >
               DONATE ONCE
             </button>
             <button
               className={`donate-modal-tab ${selectedTab === 'monthly' ? 'donate-modal-tab--active' : ''}`}
               onClick={() => setSelectedTab('monthly')}
+              disabled={isBusy}
             >
               DONATE MONTHLY
             </button>
@@ -95,6 +168,7 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
                       setSelectedAmount(amount);
                       setCustomAmount('');
                     }}
+                    disabled={isBusy}
                   >
                     ₹{amount}
                   </button>
@@ -111,6 +185,7 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
                     setCustomAmount(e.target.value);
                     setSelectedAmount(null);
                   }}
+                  disabled={isBusy}
                 />
               </div>
             </div>
@@ -125,6 +200,7 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
                 value={formData.fullName}
                 onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                 required
+                disabled={isBusy}
               />
             </div>
 
@@ -138,6 +214,7 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
+                disabled={isBusy}
               />
             </div>
 
@@ -153,6 +230,7 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
                   value={formData.mobile}
                   onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
                   required
+                  disabled={isBusy}
                 />
               </div>
               <p className="donate-form-note">All Donation updates will be sent through this number*</p>
@@ -167,6 +245,7 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
                 value={formData.address}
                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                 required
+                disabled={isBusy}
               />
             </div>
 
@@ -182,6 +261,7 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
                     checked={nationality === 'indian'}
                     onChange={() => setNationality('indian')}
                     className="donate-radio-input"
+                    disabled={isBusy}
                   />
                   <span className="donate-radio-text">I'm an Indian national</span>
                 </label>
@@ -193,6 +273,7 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
                     checked={nationality === 'non-indian'}
                     onChange={() => setNationality('non-indian')}
                     className="donate-radio-input"
+                    disabled={isBusy}
                   />
                   <span className="donate-radio-text">I'm not an Indian national</span>
                 </label>
@@ -208,12 +289,17 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
                 value={formData.pan}
                 onChange={(e) => setFormData({ ...formData, pan: e.target.value })}
                 required
+                disabled={isBusy}
               />
             </div>
 
+            {status === 'failure' && errorMessage && (
+              <p className="donate-form-error">{errorMessage}</p>
+            )}
+
             {/* Submit Button */}
-            <button type="submit" className="donate-submit-btn">
-              DONATE
+            <button type="submit" className="donate-submit-btn" disabled={isBusy}>
+              {isBusy ? 'PLEASE WAIT…' : 'DONATE'}
             </button>
           </form>
         </div>
