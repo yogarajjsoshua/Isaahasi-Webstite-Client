@@ -1,12 +1,10 @@
 import React from 'react';
 import './HerStory.css';
-
-// Image assets from Figma
-const imgHero = "https://www.figma.com/api/mcp/asset/517507d0-33f7-49ac-8cca-7a1c3421f2d9.png";
-const imgSeemaBg = "https://www.figma.com/api/mcp/asset/a5d6cef9-40e7-49ac-a37e-a37fff0a6513.png";
-const imgRubyBg = "https://www.figma.com/api/mcp/asset/5e8b584b-440e-439c-8178-5ddf837fa4b2.png";
-const imgRachnaBg = "https://www.figma.com/api/mcp/asset/37a79b48-6fff-46b7-b629-f68669e86fba.png";
-const imgDivider = "https://www.figma.com/api/mcp/asset/fda40e85-fae8-4a8c-b968-7782b5cb7841.svg";
+import imgHero from '../assets/images/her-story/hero.jpg';
+import imgSeemaBg from '../assets/images/her-story/seema-bg.jpg';
+import imgRubyBg from '../assets/images/her-story/ruby-bg.jpg';
+import imgRachnaBg from '../assets/images/her-story/rachna-bg.jpg';
+import imgDivider from '../assets/icons/her-story/divider.svg';
 
 interface Story {
   name: string;

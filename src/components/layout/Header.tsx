@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { DonateModal } from '../DonateModal';
 import './Header.css';
-
-const imgMenuItemArrow = "https://www.figma.com/api/mcp/asset/0b3a0107-57ae-4c75-bff4-a4c104608159.svg";
-const imgIndiaLogoIsaahasiAcademyIndiaFoundation4 = "https://www.figma.com/api/mcp/asset/8c0af3fd-7f4c-46cc-a65b-27a1d16e371c.png";
+import imgMenuItemArrow from '../../assets/icons/header/menu-arrow.svg';
+import imgIndiaLogoIsaahasiAcademyIndiaFoundation4 from '../../assets/images/header/logo.png';
 
 type DropdownItem = {
   label: string;

@@ -1,12 +1,10 @@
 import React from 'react';
 import './VisionPage.css';
-
-// Image assets from Figma
-const heroImage = "https://www.figma.com/api/mcp/asset/bc24784d-2b06-4755-ac9b-7eb1b332362c.png";
-const handshakeIcon = "https://www.figma.com/api/mcp/asset/3e30a5ea-edb2-4c57-b5c2-1434562434d3.svg";
-const agencyIcon = "https://www.figma.com/api/mcp/asset/b58f68c8-d709-4876-b99a-433365faa5ce.svg";
-const communityIcon = "https://www.figma.com/api/mcp/asset/7e4ce0a4-45aa-4a74-9433-dd2b763845af.svg";
-const heartIcon = "https://www.figma.com/api/mcp/asset/62b58a07-a66f-49eb-a22e-34d666a2d187.svg";
+import heroImage from '../assets/images/vision/hero.jpg';
+import handshakeIcon from '../assets/icons/vision/handshake.svg';
+import agencyIcon from '../assets/icons/vision/agency.svg';
+import communityIcon from '../assets/icons/vision/community.svg';
+import heartIcon from '../assets/icons/vision/heart.svg';
 
 export const VisionPage: React.FC = () => {
   return (

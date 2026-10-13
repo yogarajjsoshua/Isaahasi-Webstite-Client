@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import './DonateModal.css';
 import { paymentService, type DonationStatus } from '../services/paymentService';
-
-const imgRectangle20 = "https://www.figma.com/api/mcp/asset/45537811-86b5-4acc-9663-4c4ec6748a2f.png";
-const imgMaterialSymbolsClose = "https://www.figma.com/api/mcp/asset/75bf025c-288a-44f2-a7fd-055495830639.svg";
+import imgRectangle20 from '../assets/images/donate/hero-bg.jpg';
+import imgMaterialSymbolsClose from '../assets/icons/donate/close.svg';
 
 type DonateModalProps = {
   onClose: () => void;

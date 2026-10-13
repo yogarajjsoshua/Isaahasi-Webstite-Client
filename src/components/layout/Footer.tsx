@@ -1,9 +1,8 @@
 import React from 'react';
 import './Footer.css';
-
-const isahasiLogoFooter = "https://www.figma.com/api/mcp/asset/335a9e3a-d438-4700-93a6-f57c5d608f9e.png";
-const instagramIcon = "https://www.figma.com/api/mcp/asset/fa5c1f9e-f9d9-4ac3-a264-3249b37abbc7.svg";
-const linkedinIcon = "https://www.figma.com/api/mcp/asset/9d11f792-c463-48bf-be6c-5e2ae27c27d1.svg";
+import isahasiLogoFooter from '../../assets/images/footer/logo.png';
+import instagramIcon from '../../assets/icons/footer/instagram.svg';
+import linkedinIcon from '../../assets/icons/footer/linkedin.svg';
 
 export const Footer: React.FC = () => {
   return (

@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './HomePage.css';
-
-// Image assets from Figma
-const jeevanAadharLogo = "https://www.figma.com/api/mcp/asset/c3569f4d-52e3-4f84-a1ad-f51ad6a6c0d3.png";
-const btcLogo = "https://www.figma.com/api/mcp/asset/f6ff090d-59c8-4148-ad7d-ed6bd62ab1e3.png";
-const catherinesLogo = "https://www.figma.com/api/mcp/asset/b42a280f-37d5-4264-8f9e-04440af6d953.png";
-const tmiLogo = "https://www.figma.com/api/mcp/asset/44a9dfd1-06c3-4e0e-8292-21e3d240ccba.png";
-const ywcaLogo = "https://www.figma.com/api/mcp/asset/3f9d21a8-9cef-4eb1-9a4e-44a96e9fd1e5.png";
-const ellysAcademyLogo = "https://www.figma.com/api/mcp/asset/0850cdda-2938-423b-bfbe-1e277758e697.png";
-const actLogo = "https://www.figma.com/api/mcp/asset/e8a24247-6581-4a96-a353-9b157852a6d4.png";
-const buddyTeaching = "https://www.figma.com/api/mcp/asset/c0f9b639-7363-45d6-bf5e-2a17b8687d6a.png";
-const img2134 = "https://www.figma.com/api/mcp/asset/8155d6a2-4137-4ad5-92fb-9fc346ebf4b4.png";
-const img2324 = "https://www.figma.com/api/mcp/asset/8891f986-b98c-4406-9077-03ce9ea133c3.png";
-const img2280 = "https://www.figma.com/api/mcp/asset/56df708a-fa05-478f-b9bd-93308540ce58.png";
-const img2223 = "https://www.figma.com/api/mcp/asset/cc629e1f-afeb-4961-ba4a-019171ff7462.png";
-const img2344 = "https://www.figma.com/api/mcp/asset/e1b5cfe3-0018-4014-a897-6c5d607920d4.png";
-const img2360 = "https://www.figma.com/api/mcp/asset/dfa20359-750e-419a-8cd6-acf78996d089.png";
-const img2351 = "https://www.figma.com/api/mcp/asset/1e91702e-bef3-4337-9709-63007ed1190f.png";
+import jeevanAadharLogo from '../assets/images/home/partners/jeevan-aadhar.jpg';
+import btcLogo from '../assets/images/home/partners/btc.png';
+import catherinesLogo from '../assets/images/home/partners/catherines.png';
+import tmiLogo from '../assets/images/home/partners/tmi.png';
+import ywcaLogo from '../assets/images/home/partners/ywca.png';
+import ellysAcademyLogo from '../assets/images/home/partners/ellys-academy.png';
+import actLogo from '../assets/images/home/partners/act.jpg';
+import buddyTeaching from '../assets/images/home/buddy-teaching.jpg';
+import img2134 from '../assets/images/home/img-2134.jpg';
+import img2324 from '../assets/images/home/img-2324.jpg';
+import img2280 from '../assets/images/home/img-2280.jpg';
+import img2223 from '../assets/images/home/img-2223.jpg';
+import img2344 from '../assets/images/home/img-2344.png';
+import img2360 from '../assets/images/home/img-2360.png';
+import img2351 from '../assets/images/home/img-2351.png';
 
 export const HomePage: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);

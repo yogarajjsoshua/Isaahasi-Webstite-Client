@@ -1,9 +1,7 @@
 import React from 'react';
 import './OurStoryPage.css';
-
-// Image assets from Figma
-const imgRectangle70 = "https://www.figma.com/api/mcp/asset/bd600e04-ab95-4418-9c13-004ad6f9cad8.png";
-const imgSurekhaA31 = "https://www.figma.com/api/mcp/asset/dad4d27b-e350-49ff-81d4-01320cf6fb20.png";
+import imgRectangle70 from '../assets/images/our-story/hero.png';
+import imgSurekhaA31 from '../assets/images/our-story/vision-board.png';
 
 interface TimelineEvent {
   year: string;
