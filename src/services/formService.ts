@@ -2,22 +2,26 @@ import type { FormSubmission } from '../types';
 
 export class FormService {
   /**
-   * Submit a form
-   * Stage 1: Console log only (no backend)
-   * Stage 2: Will integrate with Google Sheets API
+   * Submit a form to the backend API, which records the submission
+   * in the Google Sheets-backed form store.
    */
   async submit(submission: FormSubmission): Promise<void> {
-    console.log('Form submission (Stage 1 - no backend):', submission);
+    const response = await fetch('/api/forms/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(submission),
+    });
 
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Stage 2 will implement:
-    // - Google Sheets API integration
-    // - Email notifications
-    // - Data validation
-
-    return Promise.resolve();
+    if (!response.ok) {
+      let errorMessage = 'Failed to submit form';
+      try {
+        const body = await response.json();
+        if (body?.error) errorMessage = body.error;
+      } catch {
+        // response had no JSON body; keep default message
+      }
+      throw new Error(errorMessage);
+    }
   }
 
   /**

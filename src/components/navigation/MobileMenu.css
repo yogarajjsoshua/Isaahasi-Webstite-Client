@@ -86,3 +86,15 @@
 .mobile-menu-donate .btn {
   width: 100%;
 }
+
+@media (max-width: 768px) {
+  .mobile-menu-section-title {
+    font-size: 16px;
+    padding: 16px 0;
+  }
+
+  .mobile-menu-link {
+    font-size: 15px;
+    padding: 12px;
+  }
+}

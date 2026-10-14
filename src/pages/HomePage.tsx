@@ -16,9 +16,13 @@ import img2223 from '../assets/images/home/img-2223.jpg';
 import img2344 from '../assets/images/home/img-2344.png';
 import img2360 from '../assets/images/home/img-2360.png';
 import img2351 from '../assets/images/home/img-2351.png';
+import { formService } from '../services/formService';
 
 export const HomePage: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   const carouselImages = [
     img2344, // First slide
@@ -49,6 +53,27 @@ export const HomePage: React.FC = () => {
     }, 5000);
     return () => clearInterval(timer);
   }, [carouselImages.length]);
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setMessage(null);
+
+    if (!email.trim() || !formService.validateEmail(email)) {
+      setMessage({ type: 'error', text: 'Please enter a valid email address' });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await formService.submit({ type: 'newsletter', data: { email } });
+      setMessage({ type: 'success', text: 'Thank you for subscribing!' });
+      setEmail('');
+    } catch {
+      setMessage({ type: 'error', text: 'Something went wrong. Please try again.' });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="homepage">
@@ -210,20 +235,24 @@ export const HomePage: React.FC = () => {
               To know more about the organization and get updates sign up now to our newsletter
             </p>
           </div>
-          <form className="newsletter-form" onSubmit={(e) => {
-            e.preventDefault();
-            console.log('Newsletter signup (Stage 1)');
-          }}>
+          <form className="newsletter-form" onSubmit={handleNewsletterSubmit}>
             <input
               type="email"
               placeholder="Enter Email ID"
               className="newsletter-input"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <button type="submit" className="newsletter-button">
-              Sign Up Now!
+            <button type="submit" className="newsletter-button" disabled={loading}>
+              {loading ? 'Signing up...' : 'Sign Up Now!'}
             </button>
           </form>
+          {message && (
+            <p className={message.type === 'success' ? 'newsletter-message newsletter-message--success' : 'newsletter-message newsletter-message--error'}>
+              {message.text}
+            </p>
+          )}
         </div>
       </section>
     </div>

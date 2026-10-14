@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Generated donation receipt PDFs (api/receipts/generate.ts, scripts/test-receipt-generation.ts)
+generated/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -24,3 +27,4 @@ dist-ssr
 *.sw?
 .vercel
 .env*
+!.env.example

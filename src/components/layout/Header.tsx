@@ -67,9 +67,65 @@ function MenuItem({ text, isActive = false, dropdownItems }: MenuItemProps) {
   );
 }
 
+type MobileAccordionItemProps = {
+  label: string;
+  isOpen: boolean;
+  onToggle: () => void;
+  items: DropdownItem[];
+  onNavigate: () => void;
+};
+
+function MobileAccordionItem({ label, isOpen, onToggle, items, onNavigate }: MobileAccordionItemProps) {
+  return (
+    <div className="mobile-nav-section">
+      <button
+        className="mobile-nav-section-toggle"
+        onClick={onToggle}
+        aria-expanded={isOpen}
+      >
+        {label}
+        <img
+          alt=""
+          src={imgMenuItemArrow}
+          className={`mobile-nav-section-arrow ${isOpen ? 'mobile-nav-section-arrow--open' : ''}`}
+        />
+      </button>
+      {isOpen && (
+        <div className="mobile-nav-subitems">
+          {items.map((item, index) => (
+            item.path ? (
+              <Link
+                key={index}
+                to={item.path}
+                className="mobile-nav-sublink"
+                onClick={onNavigate}
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <button
+                key={index}
+                className="mobile-nav-sublink"
+                onClick={() => {
+                  item.onClick?.();
+                  onNavigate();
+                }}
+              >
+                {item.label}
+              </button>
+            )
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export const Header: React.FC = () => {
   const location = useLocation();
   const [isDonateModalOpen, setIsDonateModalOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [openMobileSection, setOpenMobileSection] = useState<string | null>(null);
 
   const aboutUsItems: DropdownItem[] = [
     { label: 'Our Story', path: '/our-story' },
@@ -92,6 +148,18 @@ export const Header: React.FC = () => {
     { label: 'Partner with Us', path: '/partner' },
     { label: 'Donate', onClick: () => setIsDonateModalOpen(true) }
   ];
+
+  const mobileSections = [
+    { key: 'about', label: 'About Us', items: aboutUsItems },
+    { key: 'work', label: 'Our Work', items: ourWorkItems },
+    { key: 'stories', label: 'Stories', items: storiesItems },
+    { key: 'involved', label: 'Get Involved', items: getInvolvedItems },
+  ];
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+    setOpenMobileSection(null);
+  };
 
   return (
     <>
@@ -127,7 +195,51 @@ export const Header: React.FC = () => {
           >
             Donate
           </button>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            className="header-hamburger-toggle"
+            onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+            aria-label="Toggle menu"
+            aria-expanded={isMobileMenuOpen}
+          >
+            <span className="header-hamburger" />
+          </button>
         </nav>
+
+        {/* Mobile Menu Panel */}
+        {isMobileMenuOpen && (
+          <div className="mobile-nav-panel">
+            <Link
+              to="/"
+              className={`mobile-nav-link ${location.pathname === '/' ? 'mobile-nav-link--active' : ''}`}
+              onClick={closeMobileMenu}
+            >
+              Home
+            </Link>
+            {mobileSections.map((section) => (
+              <MobileAccordionItem
+                key={section.key}
+                label={section.label}
+                isOpen={openMobileSection === section.key}
+                onToggle={() =>
+                  setOpenMobileSection((prev) => (prev === section.key ? null : section.key))
+                }
+                items={section.items}
+                onNavigate={closeMobileMenu}
+              />
+            ))}
+            <button
+              className="mobile-nav-donate-button"
+              onClick={() => {
+                setIsDonateModalOpen(true);
+                closeMobileMenu();
+              }}
+            >
+              Donate
+            </button>
+          </div>
+        )}
       </header>
 
       {/* Donate Modal */}

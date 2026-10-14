@@ -85,7 +85,7 @@ export class PaymentService {
       theme: { color: '#5a8b86' },
       handler: (response: RazorpayCheckoutResponse) => {
         settled = true;
-        void this.verifyOnce(response, notify);
+        void this.verifyOnce(response, data, notify);
       },
       modal: {
         ondismiss: () => {
@@ -102,6 +102,7 @@ export class PaymentService {
 
   private async verifyOnce(
     response: RazorpayCheckoutResponse,
+    data: DonationData,
     notify: DonationStatusListener,
   ): Promise<void> {
     notify('verifying');
@@ -110,7 +111,15 @@ export class PaymentService {
       const verifyResponse = await fetch('/api/payments/verify-payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(response),
+        body: JSON.stringify({
+          ...response,
+          // Donor context for the donation receipt PDF (api/receipts/generate.ts),
+          // generated server-side right after signature verification.
+          donorName: data.donor.fullName,
+          donorEmail: data.donor.email,
+          amount: data.amount,
+          purpose: 'Donation',
+        }),
       });
 
       if (!verifyResponse.ok) {

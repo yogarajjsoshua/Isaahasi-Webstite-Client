@@ -630,6 +630,14 @@
     padding-right: 24px;
   }
 
+  .testimonial-section {
+    max-width: 100%;
+  }
+
+  .her-story-preview {
+    padding: 48px 24px;
+  }
+
   .testimonial-title {
     font-size: 32px;
   }

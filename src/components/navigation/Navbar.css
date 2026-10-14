@@ -123,7 +123,7 @@
   transform: rotate(-45deg) translate(6px, -6px);
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
   .navbar {
     height: 80px;
   }
@@ -135,9 +135,7 @@
   .navbar-mobile-toggle {
     display: flex;
   }
-}
 
-@media (max-width: 768px) {
   .navbar-container {
     padding: 0 var(--spacing-lg);
   }
