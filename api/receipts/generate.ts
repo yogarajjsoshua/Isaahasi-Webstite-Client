@@ -1,4 +1,5 @@
 import { mkdir, writeFile } from 'fs/promises';
+import os from 'os';
 import path from 'path';
 import { generateReceiptPdf, type ReceiptData } from '../_lib/receipt.js';
 
@@ -17,7 +18,10 @@ export interface ReceiptGenerationResult {
   pdfBytes: Uint8Array;
 }
 
-const GENERATED_DIR = path.join(process.cwd(), 'generated');
+// Serverless runtimes (e.g. Vercel) ship a read-only filesystem except for
+// os.tmpdir() — process.cwd() writes fail silently in production, which is
+// why receiptPath previously came back null and the receipt email never sent.
+const GENERATED_DIR = path.join(os.tmpdir(), 'isaahasi-receipts');
 
 const ONES = [
   '', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
