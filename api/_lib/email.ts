@@ -8,11 +8,6 @@
 
 import { Resend } from "resend";
 
-const RESEND_API_KEY = process.env.RESEND_API_KEY!;
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL!;
-
-const resend = new Resend(RESEND_API_KEY);
-
 export interface ReceiptEmailInput {
   to: string;
   donorName: string;
@@ -21,14 +16,40 @@ export interface ReceiptEmailInput {
   pdfBytes: Uint8Array;
 }
 
+// Constructing `new Resend(...)` at module scope would throw synchronously
+// the moment this file is imported if RESEND_API_KEY is unset — before
+// verify-payment.ts's try/catch around sendReceiptEmail even exists, which
+// would crash the whole request. Resolving the client lazily, inside the
+// function the caller already wraps in try/catch, turns that into a normal
+// catchable error instead.
+let resendClient: Resend | null = null;
+
+function getResendClient(): Resend {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY is not set in this environment");
+  }
+  if (!resendClient) {
+    resendClient = new Resend(apiKey);
+  }
+  return resendClient;
+}
+
 /**
  * Emails the receipt PDF to the donor. Throws on failure — the caller is
  * responsible for catching and deciding whether that should fail the
  * response (it shouldn't; see api/payments/verify-payment.ts).
  */
 export async function sendReceiptEmail(input: ReceiptEmailInput): Promise<void> {
-  const { error } = await resend.emails.send({
-    from: `iSaahasi Academy India Foundation <${FROM_EMAIL}>`,
+  const fromEmail = process.env.RESEND_FROM_EMAIL;
+  if (!fromEmail) {
+    throw new Error("RESEND_FROM_EMAIL is not set in this environment");
+  }
+
+  const resend = getResendClient();
+
+  const { data, error } = await resend.emails.send({
+    from: `iSaahasi Academy India Foundation <${fromEmail}>`,
     to: input.to,
     subject: `Your donation receipt — ${input.receiptNo}`,
     html: `
@@ -48,6 +69,11 @@ export async function sendReceiptEmail(input: ReceiptEmailInput): Promise<void> 
   });
 
   if (error) {
+    // Log the full error object, not just .message — Resend's error shapes
+    // (e.g. the sandbox sender restriction) carry useful detail beyond it.
+    console.error("sendReceiptEmail: Resend API returned an error", error);
     throw new Error(`Resend send failed: ${error.message}`);
   }
+
+  console.log("sendReceiptEmail: sent", { id: data?.id, to: input.to, receiptNo: input.receiptNo });
 }
