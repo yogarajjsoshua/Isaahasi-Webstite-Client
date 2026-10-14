@@ -1,4 +1,4 @@
-import { appendFormRow } from '../_lib/sheets';
+import { appendFormRow } from '../_lib/sheets.js';
 
 type FormType = 'volunteer' | 'partner' | 'newsletter';
 

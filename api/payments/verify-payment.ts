@@ -1,5 +1,6 @@
 import { validatePaymentVerification } from 'razorpay/dist/utils/razorpay-utils.js';
-import { buildAndSaveReceipt } from '../receipts/generate';
+import { buildAndSaveReceipt } from '../receipts/generate.js';
+import { sendReceiptEmail } from '../_lib/email.js';
 
 interface VerifyPaymentBody {
   razorpay_order_id: string;
@@ -43,6 +44,8 @@ export async function POST(request: Request) {
   // real at this point, so a PDF failure (e.g. missing template assets)
   // must never fail this response — it's just logged.
   let receiptPath: string | null = null;
+  let receiptNo: string | null = null;
+  let pdfBytes: Uint8Array | null = null;
   try {
     const result = await buildAndSaveReceipt({
       donorName: body.donorName ?? 'Donor',
@@ -52,8 +55,27 @@ export async function POST(request: Request) {
       paymentMethod: body.paymentMethod ?? 'Online (Razorpay)',
     });
     receiptPath = result.path;
+    receiptNo = result.receiptNo;
+    pdfBytes = result.pdfBytes;
   } catch (err) {
     console.error('verify-payment: receipt generation failed', razorpay_payment_id, err);
+  }
+
+  // Best-effort email delivery. Only attempted if the PDF above succeeded
+  // and a donor email was supplied — a missing/failed send must never fail
+  // this response, since the payment itself is already verified and real.
+  if (pdfBytes && body.donorEmail) {
+    try {
+      await sendReceiptEmail({
+        to: body.donorEmail,
+        donorName: body.donorName ?? 'Donor',
+        receiptNo: receiptNo!,
+        amount: typeof body.amount === 'number' && Number.isFinite(body.amount) ? body.amount : 0,
+        pdfBytes,
+      });
+    } catch (err) {
+      console.error('verify-payment: receipt email failed', razorpay_payment_id, err);
+    }
   }
 
   return Response.json({ verified: true, paymentId: razorpay_payment_id, receiptPath });

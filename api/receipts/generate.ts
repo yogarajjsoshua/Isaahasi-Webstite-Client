@@ -1,6 +1,6 @@
 import { mkdir, writeFile } from 'fs/promises';
 import path from 'path';
-import { generateReceiptPdf, type ReceiptData } from '../_lib/receipt';
+import { generateReceiptPdf, type ReceiptData } from '../_lib/receipt.js';
 
 interface GenerateReceiptBody {
   donorName?: string;
@@ -14,6 +14,7 @@ interface GenerateReceiptBody {
 export interface ReceiptGenerationResult {
   receiptNo: string;
   path: string;
+  pdfBytes: Uint8Array;
 }
 
 const GENERATED_DIR = path.join(process.cwd(), 'generated');
@@ -111,7 +112,7 @@ export async function buildAndSaveReceipt(
   const absolutePath = path.join(GENERATED_DIR, fileName);
   await writeFile(absolutePath, pdfBytes);
 
-  return { receiptNo, path: path.join('generated', fileName) };
+  return { receiptNo, path: path.join('generated', fileName), pdfBytes };
 }
 
 export async function POST(request: Request) {
