@@ -1,4 +1,5 @@
 import { validatePaymentVerification } from 'razorpay/dist/utils/razorpay-utils.js';
+import { processLiveSubscriptions } from '../_lib/subscriptionReceipts.js';
 
 interface VerifySubscriptionBody {
   razorpay_subscription_id: string;
@@ -28,9 +29,19 @@ export async function POST(request: Request) {
     return Response.json({ error: 'Subscription verification failed' }, { status: 400 });
   }
 
-  // Subscription's first charge is verified. The webhook handler remains
-  // the source of truth for persistence (subscription.activated/.charged),
-  // since it is keyed on Razorpay-issued IDs and immune to client retries.
+  // Subscription's first charge is verified. Send its receipt right away
+  // instead of waiting for the daily cron. This may overlap with the cron; the
+  // receipt-id cell and the Resend idempotency key keep it to one email.
+  // Best-effort: the payment is already real, so nothing here may fail the
+  // response — the cron retries anything missed.
+  try {
+    await processLiveSubscriptions({
+      deadlineMs: Date.now() + 20_000,
+      onlySubscriptionId: razorpay_subscription_id,
+    });
+  } catch (err) {
+    console.error('verify-subscription: instant receipt failed', razorpay_subscription_id, err);
+  }
 
   return Response.json({ verified: true, subscriptionId: razorpay_subscription_id });
 }

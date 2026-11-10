@@ -362,6 +362,17 @@
   transform: translateY(-50%);
 }
 
+.stats-divider-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 21px;
+  height: 21px;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .stats-divider::before {
   left: -8px;
 }

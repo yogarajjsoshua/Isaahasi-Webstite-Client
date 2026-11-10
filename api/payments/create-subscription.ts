@@ -1,4 +1,5 @@
 import Razorpay from 'razorpay';
+import { addLiveSubscriptionRow } from '../_lib/subscriptionReceipts.js';
 
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID!,
@@ -70,6 +71,20 @@ export async function POST(request: Request) {
         donation_type: 'monthly',
       },
     });
+
+    // Track the subscription in the "Live Subscriptions" tab so the daily cron
+    // can email receipts. A Sheets failure must never fail the donation.
+    try {
+      await addLiveSubscriptionRow({
+        subscriptionId: subscription.id,
+        donorName: donor.fullName,
+        email: donor.email,
+        mobile: donor.mobileNumber,
+        amount,
+      });
+    } catch (sheetErr) {
+      console.error('create-subscription: Live Subscriptions row failed', subscription.id, sheetErr);
+    }
 
     return Response.json({
       subscriptionId: subscription.id,

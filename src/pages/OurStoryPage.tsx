@@ -66,7 +66,6 @@ export const OurStoryPage: React.FC = () => {
       <section className="timeline-section">
         <p className="story-section-label">The Beginning</p>
         <div className="timeline-container">
-          <div className="timeline-line"></div>
           <div className="timeline-items">
             {timelineEvents.map((event, index) => (
               <div key={index} className="timeline-item">

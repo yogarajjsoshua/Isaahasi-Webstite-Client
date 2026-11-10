@@ -13,7 +13,7 @@ server-side verification, and webhooks.
 > hand-rolling it, so you're never relying on an unverified formula.
 
 > **Current repo state (checked before writing this guide):** there is no
-> `api/`, `lib/`, or `vercel.json` in `isaahasi-frontend/` yet, and no
+> `api/`, `lib/`, or `vercel.json` in `isaahasi-frontend/` yet (a `vercel.json` now exists, holding the subscription-receipt cron), and no
 > Google Sheets module exists. The Stage 3 planning doc assumes Stage 2
 > (Google Sheets) is already done — it isn't. Every Google Sheets step below
 > is marked **optional / not yet built** so you can integrate Razorpay now and
@@ -85,6 +85,7 @@ Two independent confirmation paths exist on purpose:
 | `RAZORPAY_KEY_ID` | Vercel env (Server) | No — read it server-side and return it in the create-order/create-subscription response instead |
 | `RAZORPAY_KEY_SECRET` | Vercel env (Server) | **Never** |
 | `RAZORPAY_WEBHOOK_SECRET` | Vercel env (Server) | **Never** |
+| `CRON_SECRET` | Vercel env (Server) | **Never** — Vercel Cron sends it as a bearer token to `api/cron/send-subscription-receipts` |
 | `VITE_RAZORPAY_KEY_ID` | Vercel env (Server+Build) | Yes, intentionally — Vite inlines `VITE_*` vars into the client bundle |
 
 Set these in Vercel: Project → Settings → Environment Variables (separately
@@ -629,6 +630,7 @@ Dashboard → Test Mode docs panel.
 - [ ] Confirm the deployed domain is HTTPS (Vercel default) — Razorpay webhooks require HTTPS
 - [ ] Re-run the full test matrix above against Live mode with a small real payment before announcing it's live
 - [ ] If/when Google Sheets is wired up: confirm the service account has edit access to the production spreadsheet, and the spreadsheet ID env var points at the real sheet, not a test copy
+- [ ] Set `CRON_SECRET` in the Vercel Production env, create the `Live Subscriptions` tab (see `GOOGLE_SHEETS_SETUP.md`), redeploy, and confirm the cron under Settings → Cron Jobs
 - [ ] Confirm no `.env*` file was committed (`git status` / `.gitignore`)
 
 ---

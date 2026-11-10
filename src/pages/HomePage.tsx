@@ -187,7 +187,9 @@ export const HomePage: React.FC = () => {
         <div className="stats-header">
           <p className="stats-years">10 YEARS SINCE</p>
           <h2 className="stats-title">The path from rescue to freedom</h2>
-          <div className="stats-divider"></div>
+          <div className="stats-divider">
+            <span className="stats-divider-dot"></span>
+          </div>
         </div>
         <div className="stats-grid">
           <div className="stat-item">

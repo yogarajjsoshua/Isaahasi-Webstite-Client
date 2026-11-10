@@ -1,0 +1,244 @@
+/* Compliance Page Styles */
+
+.compliance-page {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding-bottom: 96px;
+}
+
+/* Header */
+.compliance-header {
+  padding: 48px 144px 0;
+}
+
+.compliance-title {
+  font-family: var(--font-outfit);
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 50px;
+  color: var(--color-primary);
+  text-align: left;
+  text-transform: capitalize;
+  margin: 0 0 48px;
+}
+
+.compliance-divider {
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-primary);
+  margin: 0 0 40px;
+}
+
+.compliance-intro {
+  font-family: var(--font-open-sans);
+  font-size: 18px;
+  line-height: 30px;
+  color: var(--color-text-primary);
+  max-width: 900px;
+  margin: 0;
+}
+
+/* Year sections */
+.compliance-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding: 56px 144px 0;
+}
+
+.compliance-section {
+  background-color: var(--color-beige);
+  border-radius: 16px;
+  padding: 40px 48px;
+}
+
+.compliance-section-title {
+  font-family: var(--font-outfit);
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 40px;
+  color: var(--color-primary);
+  margin: 0 0 24px;
+}
+
+.compliance-doc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.compliance-doc {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: #fff;
+  border: 1px solid var(--color-teal-bg);
+  border-radius: 12px;
+  padding: 16px 24px;
+}
+
+.compliance-doc-icon {
+  flex: 0 0 auto;
+  color: var(--color-primary);
+}
+
+.compliance-doc-name {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-open-sans);
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--color-text-primary);
+  overflow-wrap: anywhere;
+}
+
+.compliance-doc-actions {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.compliance-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-outfit);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  padding: 8px 20px;
+  border: 2px solid var(--color-primary);
+  border-radius: 8px;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.compliance-action--view {
+  background-color: transparent;
+  color: var(--color-primary);
+}
+
+.compliance-action--view:hover {
+  background-color: var(--color-teal-bg);
+}
+
+.compliance-action--download {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.compliance-action--download:hover {
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+}
+
+.compliance-action:focus-visible {
+  outline: 3px solid var(--color-primary-dark);
+  outline-offset: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 1280px) {
+  .compliance-header {
+    padding: 48px 96px 0;
+  }
+
+  .compliance-sections {
+    padding: 56px 96px 0;
+  }
+
+  .compliance-title {
+    font-size: 36px;
+    line-height: 45px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .compliance-header {
+    padding: 48px 48px 0;
+  }
+
+  .compliance-sections {
+    padding: 48px 48px 0;
+    gap: 40px;
+  }
+
+  .compliance-title {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .compliance-section-title {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .compliance-page {
+    padding-bottom: 64px;
+  }
+
+  .compliance-header {
+    padding: 32px 24px 0;
+  }
+
+  .compliance-sections {
+    padding: 40px 24px 0;
+    gap: 32px;
+  }
+
+  .compliance-title {
+    font-size: 28px;
+    line-height: 36px;
+    margin-bottom: 32px;
+  }
+
+  .compliance-divider {
+    margin-bottom: 24px;
+  }
+
+  .compliance-intro {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .compliance-section {
+    padding: 24px 16px;
+    border-radius: 12px;
+  }
+
+  .compliance-section-title {
+    font-size: 24px;
+    line-height: 32px;
+    margin-bottom: 16px;
+  }
+
+  .compliance-doc {
+    flex-wrap: wrap;
+    gap: 12px 16px;
+    padding: 16px;
+  }
+
+  .compliance-doc-name {
+    flex: 1 1 calc(100% - 56px);
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .compliance-doc-actions {
+    flex: 1 1 100%;
+  }
+
+  .compliance-action {
+    flex: 1;
+  }
+}

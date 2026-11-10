@@ -3,6 +3,7 @@ import './OurTeam.css';
 import teamHeroImage from '../assets/images/team/hero.jpg';
 import photoKavi from '../assets/images/team/photo-kavi.jpg';
 import photoRenjanKoshy from '../assets/images/team/photo-renjan-koshy.jpg';
+import photoKoshy from '../assets/images/team/photo-koshy.jpg';
 import photoVeena from '../assets/images/team/photo-veena.jpg';
 import photoSonal from '../assets/images/team/photo-sonal.jpg';
 import photoAtiya from '../assets/images/team/photo-atiya.jpg';
@@ -38,10 +39,22 @@ From a young age, Kavi has had a heart for serving people on the margins of soci
       frame: frameBoard
     },
     {
-      name: "Dr. Koshy George",
-      title: "",
-      bio: `Renjan is a retired Naval Officer and former procurement leader at Maersk and has  had over 24 years of rich and diverse experience in the area of Leadership, Procurement, Consulting, Armed forces and Social sector covering Defence, Shipping and Life sciences Industries. He has delivered strong results by leading teams, projects, and categories across a diverse spectrum of industries bringing significant business value, effectiveness, and impact at both strategic and tactical levels. Alongside his corporate and social sector engagement, he has been in pastoral care for the last 12 years building and empowering people at a different realm.`,
-      photo: photoRenjanKoshy,
+      name: "Dr. Koshy C. George",
+      title: "Medical Superintendent, Kotagiri Medical Fellowship Hospital, Kotagiri",
+      bio: `Dr. Koshy C. George is a pediatrician and the Medical Superintendent of Kotagiri Medical Fellowship Hospital, Kotagiri, Tamil Nadu.
+
+He completed his schooling in Tiruchirappalli before pursuing his undergraduate and postgraduate medical education at the prestigious Christian Medical College, Vellore. An accomplished student, he was recognized as the Best Outgoing Student in MD Pediatrics and awarded the Gold Medal for academic excellence.
+
+Driven by a deep commitment to serving underserved communities, Dr. George has worked extensively across northern and northeastern India, particularly among economically and socially disadvantaged populations. His work has addressed a wide range of public health and social challenges, including childhood malnutrition, human trafficking, disease prevention, disability prevention, and rehabilitation.
+
+He continues to bring his clinical expertise and experience in community healthcare to the Nilgiris, with a particular interest in improving access to quality healthcare for vulnerable and marginalized populations.
+
+Having received specialized training in palliative care, Dr. George, together with his wife, Dr. Miriam, is actively involved in caring for individuals and families facing life-limiting illnesses in the Nilgiris. Their work reflects a shared commitment to compassionate, holistic, and dignified care.
+
+Dr. George and Dr. Miriam have two sons, both of whom study at Riverside Public School in Kotagiri.
+
+His professional journey reflects a commitment to clinical excellence, community service, and the belief that quality healthcare should be accessible to all, especially those most in need.`,
+      photo: photoKoshy,
       frame: frameBoard
     }
   ];

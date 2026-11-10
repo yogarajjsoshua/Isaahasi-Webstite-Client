@@ -10,6 +10,7 @@ import { UpdatesPage } from './pages/UpdatesPage';
 import { PartnerPage } from './pages/PartnerPage';
 import { VolunteerPage } from './pages/VolunteerPage';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
+import { CompliancePage } from './pages/CompliancePage';
 import './styles/globals.css';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="partner" element={<PartnerPage />} />
           <Route path="volunteer" element={<VolunteerPage />} />
           <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="compliance" element={<CompliancePage />} />
         </Route>
       </Routes>
     </BrowserRouter>

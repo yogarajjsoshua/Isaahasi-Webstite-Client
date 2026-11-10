@@ -14,10 +14,13 @@ involved. Follow these steps once per environment (local + Vercel).
    - `Volunteer` — columns: `Timestamp`, `Full Name`, `Email`, `Mobile Number`, `Message`
    - `Partner` — columns: `Timestamp`, `Full Name`, `Organisation Name`, `Email`, `Mobile Number`, `Message`
    - `Newsletter` — columns: `Timestamp`, `Email`
+   - `Live Subscriptions` — columns (in this order): `Subscription ID`, `Donor Name`, `Email`, `Mobile`, `Amount (INR)`, `Razorpay Status`, `Receipt Payment IDs`, `Created At`, `Last Checked`.
+     Rows are added when a monthly subscription is created and removed by the daily cron once it is cancelled, completed or expired.
+     `Receipt Payment IDs` lists the Razorpay payment ids already emailed (comma-separated) — don't edit it by hand unless you want a receipt re-sent.
 
 ## 2. Create a Google Cloud project and enable the Sheets API
 
-1. Go to the [Google Cloud Console](https://console.cloud.google.com/) and
+1. Go to the [Google Cloud Console](how t) and
    create a new project (or reuse an existing one).
 2. With that project selected, open **APIs & Services → Library**, search
    for **Google Sheets API**, and click **Enable**.

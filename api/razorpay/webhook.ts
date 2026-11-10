@@ -1,10 +1,36 @@
 import { validateWebhookSignature } from 'razorpay/dist/utils/razorpay-utils.js';
+import { appendFormRow } from '../_lib/sheets.js';
+import {
+  PAYMENTS_SHEET_NAME,
+  buildPaymentsRow,
+  recordPaymentRow,
+  type RazorpayNotes,
+} from '../_lib/paymentsSheet.js';
+import { buildAndSaveReceipt } from '../receipts/generate.js';
+import { sendReceiptEmail } from '../_lib/email.js';
+
+const SHEET_NAME = PAYMENTS_SHEET_NAME;
+
+interface RazorpayPaymentEntity {
+  id: string;
+  order_id?: string;
+  amount?: number;
+  currency?: string;
+  email?: string;
+  contact?: string;
+  notes?: RazorpayNotes;
+}
+
+interface RazorpaySubscriptionEntity {
+  id: string;
+  notes?: RazorpayNotes;
+}
 
 interface RazorpayWebhookEvent {
   event: string;
   payload: {
-    payment?: { entity: Record<string, unknown> & { id: string } };
-    subscription?: { entity: Record<string, unknown> & { id: string } };
+    payment?: { entity: RazorpayPaymentEntity };
+    subscription?: { entity: RazorpaySubscriptionEntity };
   };
 }
 
@@ -29,43 +55,80 @@ export async function POST(request: Request) {
 
   const event = JSON.parse(rawBody) as RazorpayWebhookEvent;
 
-  // Record-keeping (e.g. the Google Sheets "Payments" tab, per
-  // RazorPay_Implementation.md §8) is not yet wired up. Each case below is
-  // the point where that write would happen, keyed on the Razorpay-issued
-  // id (payment.entity.id / subscription.entity.id) for idempotency, since
-  // Razorpay redelivers webhooks on timeout/non-2xx.
-  switch (event.event) {
-    case 'payment.captured': {
-      const payment = event.payload.payment?.entity;
-      console.log('webhook: payment captured', payment?.id);
-      break;
+  // Sheets failures must never fail this response — Razorpay would retry the
+  // whole webhook indefinitely, and the payment itself already happened
+  // regardless of whether record-keeping succeeds.
+  try {
+    switch (event.event) {
+      case 'payment.captured':
+      case 'payment.failed': {
+        const payment = event.payload.payment?.entity;
+        if (payment) {
+          const row = buildPaymentsRow({
+            recordId: payment.id,
+            donationType: 'once',
+            amountInPaise: payment.amount ?? null,
+            currency: payment.currency ?? 'INR',
+            orderId: payment.order_id ?? '',
+            paymentId: payment.id,
+            subscriptionId: '',
+            status: event.event === 'payment.captured' ? 'captured' : 'failed',
+            notes: payment.notes,
+            fallbackEmail: payment.email,
+            fallbackMobile: payment.contact,
+          });
+          await recordPaymentRow(row, payment.id);
+        }
+        break;
+      }
+      case 'subscription.charged': {
+        const payment = event.payload.payment?.entity;
+        const subscription = event.payload.subscription?.entity;
+        if (payment) {
+          const row = buildPaymentsRow({
+            recordId: payment.id,
+            donationType: 'monthly',
+            amountInPaise: payment.amount ?? null,
+            currency: payment.currency ?? 'INR',
+            orderId: payment.order_id ?? '',
+            paymentId: payment.id,
+            subscriptionId: subscription?.id ?? '',
+            status: 'charged',
+            notes: payment.notes ?? subscription?.notes,
+            fallbackEmail: payment.email,
+            fallbackMobile: payment.contact,
+          });
+          await recordPaymentRow(row, payment.id);
+        }
+        break;
+      }
+      case 'subscription.activated':
+      case 'subscription.halted':
+      case 'subscription.cancelled':
+      case 'subscription.pending':
+      case 'subscription.paused': {
+        const subscription = event.payload.subscription?.entity;
+        if (subscription) {
+          const row = buildPaymentsRow({
+            recordId: subscription.id,
+            donationType: 'monthly',
+            amountInPaise: null,
+            currency: 'INR',
+            orderId: '',
+            paymentId: '',
+            subscriptionId: subscription.id,
+            status: event.event,
+            notes: subscription.notes,
+          });
+          await appendFormRow(SHEET_NAME, row);
+        }
+        break;
+      }
+      default:
+        console.log('webhook: unhandled event', event.event);
     }
-    case 'payment.failed': {
-      const payment = event.payload.payment?.entity;
-      console.log('webhook: payment failed', payment?.id);
-      break;
-    }
-    case 'subscription.activated': {
-      const subscription = event.payload.subscription?.entity;
-      console.log('webhook: subscription activated', subscription?.id);
-      break;
-    }
-    case 'subscription.charged': {
-      const payment = event.payload.payment?.entity;
-      const subscription = event.payload.subscription?.entity;
-      console.log('webhook: subscription charged', subscription?.id, payment?.id);
-      break;
-    }
-    case 'subscription.halted':
-    case 'subscription.cancelled':
-    case 'subscription.pending':
-    case 'subscription.paused': {
-      const subscription = event.payload.subscription?.entity;
-      console.log(`webhook: ${event.event}`, subscription?.id);
-      break;
-    }
-    default:
-      console.log('webhook: unhandled event', event.event);
+  } catch (err) {
+    console.error('webhook: Sheets write failed', event.event, err);
   }
 
   // Always ack quickly with 2xx once the signature is verified, regardless

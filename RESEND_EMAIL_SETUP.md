@@ -6,7 +6,7 @@ address (already collected on the donation form and threaded through to
 `api/payments/verify-payment.ts` as `donorEmail`).
 
 This is a **documentation-only** guide — none of the steps below have been applied to the
-codebase yet. Follow it top to bottom to implement the feature.
+codebase yet. Follow it top to bottom to implement the feature. 
 
 ## Why Resend
 
@@ -298,3 +298,18 @@ Resend dashboard's **Logs** tab to confirm delivery and inspect the rendered ema
 - [ ] Send a real test donation end-to-end and confirm the email + attachment arrive
 - [ ] Decide separately on PDF password-protection (see §6) before handling real PAN data at
       volume
+
+## 9. Monthly receipts via Vercel Cron
+
+Monthly charges happen without the donor's browser, so a daily Vercel Cron job
+(`vercel.json`, `30 3 * * *` UTC) calls `api/cron/send-subscription-receipts.ts`.
+It reads the `Live Subscriptions` tab, asks Razorpay which invoices were paid, and
+emails a receipt for each charge not yet listed in `Receipt Payment IDs`.
+
+- Set `CRON_SECRET` in Vercel (Production). The endpoint returns 401 without
+  `Authorization: Bearer $CRON_SECRET`.
+- Each send uses the Resend idempotency key `monthly-receipt/<payment_id>`; Resend
+  remembers keys for 24 hours, so the sheet cell is the main record and the key is
+  a guard against retries and overlapping runs.
+- The Resend free tier allows 100 emails/day; unsent receipts are retried next run.
+- Trigger manually: `curl -H "Authorization: Bearer $CRON_SECRET" https://<domain>/api/cron/send-subscription-receipts`
