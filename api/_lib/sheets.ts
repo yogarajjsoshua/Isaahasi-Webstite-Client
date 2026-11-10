@@ -12,12 +12,21 @@ import { google } from "googleapis";
 
 const SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL!;
 // The PEM key arrives as a single-line env var with literal "\n" escape
-// sequences in place of real newlines; unescape before handing it to the
-// JWT client, or auth will fail.
-const SERVICE_ACCOUNT_PRIVATE_KEY = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY?.replace(
-  /\\n/g,
-  "\n"
-);
+// sequences in place of real newlines. Unescape them, and strip any wrapping
+// quotes and stray CRs that dashboards add when the value is pasted, or
+// OpenSSL rejects the key with ERR_OSSL_UNSUPPORTED.
+function normalizePrivateKey(raw: string | undefined): string | undefined {
+  if (!raw) {
+    return raw;
+  }
+  return raw
+    .trim()
+    .replace(/^["']|["']$/g, "")
+    .replace(/\\n/g, "\n")
+    .replace(/\r/g, "");
+}
+
+const SERVICE_ACCOUNT_PRIVATE_KEY = normalizePrivateKey(process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY);
 const SPREADSHEET_ID = process.env.GOOGLE_SHEETS_SPREADSHEET_ID!;
 
 const SHEETS_SCOPES = ["https://www.googleapis.com/auth/spreadsheets"];
