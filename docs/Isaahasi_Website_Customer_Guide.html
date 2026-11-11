@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>iSaahasi Website — Owner's Guide</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm 18mm 16mm; }
+  :root { --brand:#7a1f4d; --ink:#222; --muted:#666; --line:#ddd; --soft:#faf4f7; --warn:#fff6e0; --warnline:#e6b94d; --bad:#fdecec; --badline:#d66; --ok:#eaf6ee; --okline:#5aa56f; }
+  * { box-sizing:border-box; }
+  body { font-family:-apple-system,"Helvetica Neue",Arial,sans-serif; color:var(--ink); font-size:10.5pt; line-height:1.5; margin:0; }
+  h1 { font-size:26pt; color:var(--brand); margin:0 0 6px; line-height:1.15; }
+  h2 { font-size:16pt; color:var(--brand); border-bottom:2px solid var(--brand); padding-bottom:4px; margin:28px 0 10px; break-after:avoid; }
+  h3 { font-size:12pt; margin:18px 0 6px; break-after:avoid; }
+  p { margin:6px 0; }
+  ul,ol { margin:6px 0 6px 20px; padding:0; }
+  li { margin:2px 0; }
+  table { border-collapse:collapse; width:100%; margin:8px 0; font-size:9.6pt; }
+  th,td { border:1px solid var(--line); padding:5px 7px; text-align:left; vertical-align:top; }
+  th { background:var(--soft); }
+  tr { break-inside:avoid; }
+  code { font-family:Menlo,Consolas,monospace; font-size:9pt; background:#f3f3f3; padding:1px 4px; border-radius:3px; }
+  pre { background:#f3f3f3; padding:8px 10px; border-radius:4px; font-size:8.8pt; white-space:pre-wrap; word-break:break-all; }
+  .cover { min-height:240mm; display:flex; flex-direction:column; justify-content:center; break-after:page; }
+  .cover .sub { font-size:14pt; color:var(--muted); margin-bottom:30px; }
+  .cover .meta td { border:none; padding:3px 0; }
+  .pb { break-before:page; }
+  .box { border-radius:6px; padding:8px 12px; margin:10px 0; break-inside:avoid; }
+  .note { background:var(--soft); border-left:4px solid var(--brand); }
+  .warn { background:var(--warn); border-left:4px solid var(--warnline); }
+  .bad { background:var(--bad); border-left:4px solid var(--badline); }
+  .ok { background:var(--ok); border-left:4px solid var(--okline); }
+  .shot { border:2px dashed #999; background:#fafafa; border-radius:6px; padding:10px 12px; margin:12px 0; break-inside:avoid; }
+  .shot .tag { display:inline-block; background:#333; color:#fff; font-weight:bold; font-size:9pt; padding:1px 8px; border-radius:10px; margin-bottom:4px; }
+  .shot .space { height:55mm; border:1px solid #ccc; background:#fff; margin-top:6px; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:9pt; }
+  .shot dl { margin:4px 0 0; display:grid; grid-template-columns:90px 1fr; gap:2px 8px; font-size:9.6pt; }
+  .shot dt { font-weight:bold; color:var(--muted); }
+  .shot dd { margin:0; }
+  .flow { display:flex; flex-wrap:wrap; align-items:center; gap:4px; margin:8px 0; font-size:9.4pt; }
+  .flow span { background:var(--soft); border:1px solid var(--brand); border-radius:5px; padding:4px 8px; }
+  .flow i { color:var(--brand); font-style:normal; font-weight:bold; }
+  .small { font-size:9pt; color:var(--muted); }
+  .toc li { margin:3px 0; }
+  .blank { background:#fffbe6; }
+</style>
+</head>
+<body>
+
+<!-- ===================== COVER ===================== -->
+<div class="cover">
+  <div class="small" style="letter-spacing:2px;">HANDOVER DOCUMENT</div>
+  <h1>iSaahasi Academy India Foundation<br>Website Owner's Guide</h1>
+  <div class="sub">How your website works, which outside services run it, what they cost, and where to look for what.</div>
+  <table class="meta" style="width:auto;">
+    <tr><td><b>Prepared for:</b></td><td>iSaahasi Academy India Foundation (website owner)</td></tr>
+    <tr><td><b>Prepared by:</b></td><td>Website development team</td></tr>
+    <tr><td><b>Document date:</b></td><td>11 November 2026</td></tr>
+    <tr><td><b>Written for:</b></td><td>Non-technical staff, trustees and volunteers</td></tr>
+  </table>
+  <div class="box warn" style="margin-top:30px;">
+    <b>Note for the person preparing this PDF.</b> Grey dashed boxes marked <b>SCREENSHOT n</b> are placeholders. Take each screenshot as described, paste it into the box, and delete the instruction lines if you wish. A full checklist is in Section 12. <b>Before taking any screenshot, hide secret keys, PAN numbers, donor emails and phone numbers</b> (see Section 11).
+  </div>
+</div>
+
+<!-- ===================== TOC ===================== -->
+<h2 style="margin-top:0;">Contents</h2>
+<ol class="toc">
+  <li>The big picture in one page</li>
+  <li>What visitors can do on the website</li>
+  <li>What happens when someone donates (step by step)</li>
+  <li>The outside services — who does what</li>
+  <li>What it costs (and a worked example)</li>
+  <li>Where to look for what (quick reference)</li>
+  <li>Service-by-service tutorial with screenshots: Razorpay, Google Sheets, Resend, Vercel</li>
+  <li>Everyday tasks (how-to)</li>
+  <li>When something goes wrong</li>
+  <li>Before going live — the launch checklist</li>
+  <li>Security and privacy — what to protect</li>
+  <li>Screenshot checklist (everything to capture)</li>
+  <li>Account ownership register (to fill in)</li>
+</ol>
+
+<!-- ===================== 1 ===================== -->
+<h2 class="pb">1. The big picture in one page</h2>
+<p>Your website is a normal public website, with a small "back office" behind it that takes donations, saves form submissions and emails receipts. <b>There is no separate admin panel to log in to on the website itself.</b> Instead, you manage things through four outside services, each with its own login:</p>
+<table>
+  <tr><th style="width:17%">Service</th><th style="width:30%">In plain words</th><th>You log in to…</th></tr>
+  <tr><td><b>Razorpay</b></td><td>Takes the money (UPI, cards, net banking) and pays it into the NGO's bank account.</td><td>Razorpay Dashboard</td></tr>
+  <tr><td><b>Google Sheets</b></td><td>Your "database". Every form submission and payment record appears as a row in a spreadsheet.</td><td>Google Drive / Sheets</td></tr>
+  <tr><td><b>Resend</b></td><td>Sends the donation receipt PDF to the donor by email.</td><td>Resend Dashboard</td></tr>
+  <tr><td><b>Vercel</b></td><td>The "landlord" — hosts the website, runs the back office, stores the secret settings, runs the daily monthly-receipt job.</td><td>Vercel Dashboard</td></tr>
+</table>
+<p>Smaller items: <b>Google Fonts</b> (free fonts shown on pages) and your <b>domain name</b> (your website address, bought from a registrar).</p>
+
+<h3>How the pieces connect</h3>
+<div class="flow">
+  <span>Visitor's browser</span><i>→</i><span>Website (hosted on Vercel)</span><i>→</i><span>Back office (Vercel)</span>
+</div>
+<div class="flow">
+  <span>Back office</span><i>→</i><span>Razorpay (payment)</span><i>→</i><span>Your bank account</span>
+</div>
+<div class="flow">
+  <span>Back office</span><i>→</i><span>Google Sheet (records)</span>
+</div>
+<div class="flow">
+  <span>Back office</span><i>→</i><span>Resend (email)</span><i>→</i><span>Donor's inbox (receipt PDF, copy to info.isaahasi@gmail.com)</span>
+</div>
+
+<div class="box note"><b>The most important thing to remember:</b> the <b>money</b> lives in Razorpay and your bank. The <b>records</b> live in Google Sheets. The <b>receipts</b> go out through Resend. The <b>website itself</b> runs on Vercel. If something looks wrong, ask first: "which of these four?" — Section 6 tells you where to look.</div>
+
+<div class="shot">
+  <span class="tag">SCREENSHOT 1</span> <b>Website home page</b>
+  <dl><dt>Where</dt><dd>Open your live website address in a browser.</dd>
+  <dt>Capture</dt><dd>The full top of the Home page including the menu and the Donate button.</dd>
+  <dt>Highlight</dt><dd>Draw a box around the Donate button.</dd></dl>
+  <div class="space">Paste screenshot here</div>
+</div>
+
+<!-- ===================== 2 ===================== -->
+<h2 class="pb">2. What visitors can do on the website</h2>
+<table>
+  <tr><th style="width:22%">Page</th><th style="width:20%">Address</th><th>What it is / what happens</th></tr>
+  <tr><td>Home</td><td><code>/</code></td><td>Main page with the Donate button and a <b>newsletter sign-up</b> ("For news and updates"). Newsletter emails go to the <b>Newsletter</b> tab of the Google Sheet.</td></tr>
+  <tr><td>Our Story</td><td><code>/our-story</code></td><td>Information page (static text and images).</td></tr>
+  <tr><td>Our Team</td><td><code>/our-team</code></td><td>Team members (static).</td></tr>
+  <tr><td>Her Story</td><td><code>/her-story</code></td><td>Beneficiary stories (static).</td></tr>
+  <tr><td>Our Work</td><td><code>/our-work</code></td><td>Programmes: education, health, employment, community (static).</td></tr>
+  <tr><td>Vision</td><td><code>/vision</code></td><td>Vision page (static).</td></tr>
+  <tr><td>Updates</td><td><code>/updates</code></td><td>News and event updates (static).</td></tr>
+  <tr><td>Partner</td><td><code>/partner</code></td><td><b>Form</b> — organisations who want to partner / sponsor. Goes to the <b>Partner</b> tab.</td></tr>
+  <tr><td>Volunteer</td><td><code>/volunteer</code></td><td><b>Form</b> — people who want to volunteer. Goes to the <b>Volunteer</b> tab.</td></tr>
+  <tr><td>Reports &amp; Compliance</td><td><code>/compliance</code></td><td>Downloadable PDFs (annual returns MGT-7 for 2020-21 to 2024-25).</td></tr>
+  <tr><td>Careers</td><td><code>/careers</code></td><td>Static page that currently says the organisation is not hiring.</td></tr>
+  <tr><td>Privacy Policy</td><td><code>/privacy-policy</code></td><td>Static legal text.</td></tr>
+</table>
+<div class="box note"><b>"Static" means</b> the text and pictures are part of the website's code. To change the words or photos on a static page, the developer must update the code and publish again (Section 8). Only the items in <b>bold</b> (forms, donations, compliance list) produce data you manage yourself.</div>
+
+<h3>Footer information shown to the public</h3>
+<ul>
+  <li>Email isaahasiindia@gmail.com · Phone +91 9920852249</li>
+  <li>Registered under Section 8(1) of the Companies Act 2013 (CIN U93090MH2016NPL284468) and Section 80G; part of International Sanctuary.</li>
+  <li>Instagram and LinkedIn icons are currently <b>placeholders</b> (they do not open your real profiles yet) and "Terms of Use" is plain text, not a link. See Section 11.</li>
+</ul>
+
+<div class="shot">
+  <span class="tag">SCREENSHOT 2</span> <b>Volunteer form and Partner form</b>
+  <dl><dt>Where</dt><dd>/volunteer and /partner pages.</dd>
+  <dt>Capture</dt><dd>One screenshot of each form (empty).</dd></dl>
+  <div class="space">Paste screenshot here</div>
+</div>
+
+<!-- ===================== 3 ===================== -->
+<h2 class="pb">3. What happens when someone donates</h2>
+<p>The donation window (opened by any Donate button) has two tabs: <b>DONATE ONCE</b> and <b>DONATE MONTHLY</b>. The donor picks ₹500, ₹1,000, ₹5,000 or types any amount, and fills in: Full Name, Email, Mobile (+91), Address, Nationality (Indian / not Indian) and PAN (checked for correct format).</p>
+
+<h3>A. One-time donation</h3>
+<ol>
+  <li>Donor fills the form and presses Donate. The website asks Razorpay to create an <b>order</b>.</li>
+  <li>The Razorpay payment window opens (UPI, card, net banking, wallets).</li>
+  <li>Donor pays. Razorpay sends a signed confirmation back.</li>
+  <li>The back office <b>checks the signature</b> (this prevents fake "paid" claims).</li>
+  <li>A <b>receipt PDF</b> is made on your receipt template (with the authorised signature) and emailed by Resend to the donor, copied to <code>info.isaahasi@gmail.com</code>. Subject: "Your donation receipt — RCPT-…".</li>
+  <li>The donor sees: "Your donation was successful. A confirmation has been sent to your email and mobile number."</li>
+  <li>A record is added to the <b>Payments</b> tab of the Google Sheet.</li>
+</ol>
+
+<h3>B. Monthly donation</h3>
+<ol>
+  <li>Donor chooses DONATE MONTHLY, fills the form and approves a <b>recurring payment</b> in Razorpay's window (card or UPI AutoPay / e-mandate).</li>
+  <li>The first month is charged immediately. The back office adds a row to the <b>Live Subscriptions</b> tab and sends the first receipt straight away.</li>
+  <li>Razorpay charges the donor automatically every month (set up to run up to 120 months ≈ 10 years, unless cancelled).</li>
+  <li>Every day at about <b>9:00 AM IST</b> an automatic job on Vercel (the "cron job") checks every live subscription, finds any month that was paid but not yet receipted, emails the receipt ("Your monthly donation receipt — installment #N") and records it in <b>Payments</b>.</li>
+  <li>When a subscription is cancelled/completed/expired, its row is automatically removed from <b>Live Subscriptions</b> (the history stays in <b>Payments</b> and in Razorpay).</li>
+</ol>
+<div class="box note"><b>So:</b> a monthly donor's receipt for months 2, 3, 4… arrives by email within about a day of the charge. It is automatic; nobody has to do anything.</div>
+
+<table>
+  <tr><th>Sheet tab</th><th>What it contains</th></tr>
+  <tr><td>Volunteer</td><td>Timestamp, Full Name, Email, Mobile Number, Message</td></tr>
+  <tr><td>Partner</td><td>Timestamp, Full Name, Organisation Name, Email, Mobile Number, Message</td></tr>
+  <tr><td>Newsletter</td><td>Timestamp, Email</td></tr>
+  <tr><td>Payments</td><td>One row per payment: record ID, time, donor name/email/mobile, donation type (one-time / monthly), amount, currency, Razorpay order / payment / subscription IDs, status</td></tr>
+  <tr><td>Live Subscriptions</td><td>Working list for the daily job: subscription ID, donor, amount, Razorpay status, receipts already sent, created / last-checked time. <b>Please do not edit this tab by hand.</b></td></tr>
+</table>
+
+<div class="shot">
+  <span class="tag">SCREENSHOT 3</span> <b>The donation window — "Donate once" tab</b>
+  <dl><dt>Where</dt><dd>Click Donate on the live site.</dd>
+  <dt>Capture</dt><dd>The open window showing amount buttons and the form fields (leave empty).</dd></dl>
+  <div class="space">Paste screenshot here</div>
+</div>
+<div class="shot">
+  <span class="tag">SCREENSHOT 4</span> <b>The donation window — "Donate monthly" tab</b>
+  <dl><dt>Capture</dt><dd>Same window with the monthly tab selected.</dd></dl>
+  <div class="space">Paste screenshot here</div>
+</div>
+<div class="shot">
+  <span class="tag">SCREENSHOT 5</span> <b>A sample receipt email and the receipt PDF</b>
+  <dl><dt>Where</dt><dd>Make a small test donation (Section 8 explains test mode) or use an existing donor's copy in info.isaahasi@gmail.com.</dd>
+  <dt>Capture</dt><dd>The email in the inbox, and the opened PDF receipt.</dd>
+  <dt>Hide</dt><dd>Donor name, email and phone (unless it's your own test).</dd></dl>
+  <div class="space">Paste screenshot here</div>
+</div>
+
+<!-- ===================== 4 ===================== -->
+<h2 class="pb">4. The outside services — who does what</h2>
+
+<h3>4.1 Razorpay — payments</h3>
+<ul>
+  <li><b>Does:</b> shows the payment window, collects the money, settles it to the NGO bank account, runs the monthly auto-debits, issues refunds.</li>
+  <li><b>You use it to:</b> see every payment, check settlements into the bank, refund a donation, cancel a monthly subscription, download reports for your accountant.</li>
+  <li><b>Two modes:</b> <b>Test</b> (pretend money, for practice) and <b>Live</b> (real money). A toggle at the top of the dashboard switches between them. The website must use Live keys to take real donations.</li>
+  <li><b>Needs from the NGO:</b> completed KYC (PAN, bank account, registration documents) — done through Razorpay's own dashboard.</li>
+</ul>
+
+<h3>4.2 Google Sheets &amp; Google Cloud — the records</h3>
+<ul>
+  <li><b>Does:</b> stores every volunteer, partner, newsletter and payment record in one Google Spreadsheet.</li>
+  <li><b>Behind the scenes:</b> a Google Cloud "service account" (a robot Google user) writes to the sheet. <b>The sheet must stay shared with that robot's email as Editor</b> — if you remove it, no forms or payments will be saved.</li>
+  <li><b>You use it to:</b> read enquiries, export to Excel, follow up with volunteers and partners, reconcile donations.</li>
+</ul>
+
+<h3>4.3 Resend — emails</h3>
+<ul>
+  <li><b>Does:</b> delivers the receipt email with the PDF attached, from your own domain.</li>
+  <li><b>You use it to:</b> check whether a particular receipt was delivered, bounced, or never sent.</li>
+  <li><b>Needs:</b> your domain verified inside Resend (a one-time DNS setup by whoever manages the domain).</li>
+</ul>
+
+<h3>4.4 Vercel — hosting and the "engine room"</h3>
+<ul>
+  <li><b>Does:</b> serves the website to visitors, runs the back-office code, stores the secret settings (keys and passwords) safely, and runs the daily receipt job.</li>
+  <li><b>You use it to:</b> see if the latest version is live, read error logs, check the daily job ran, update a setting, see usage and billing.</li>
+  <li>The project is called <code>isaahasi-frontend</code>.</li>
+</ul>
+
+<h3>4.5 Smaller items</h3>
+<ul>
+  <li><b>Google Fonts</b> — free; the browser loads the typefaces from Google. Nothing to manage.</li>
+  <li><b>Domain name</b> — your website address is rented yearly from a registrar (GoDaddy, BigRock, Namecheap, etc.). It must be renewed, or the site goes offline. Your registrar's DNS settings also hold the records that let Resend send email from your domain.</li>
+  <li><b>Source code (GitHub or similar)</b> — where the website's code is stored. Keep ownership with the NGO, not an individual.</li>
+</ul>
+
+<!-- ===================== 5 ===================== -->
+<h2 class="pb">5. What it costs</h2>
+<div class="box warn"><b>Prices checked on 11 November 2026</b> from each company's public pricing page. Companies change prices — always re-check the linked pages (razorpay.com/pricing, resend.com/pricing, vercel.com/pricing) before budgeting. Amounts in USD are charged by the company in dollars; your bank/card converts them.</div>
+
+<table>
+  <tr><th style="width:15%">Service</th><th style="width:25%">Plan you need</th><th style="width:20%">Fixed cost</th><th>Variable cost</th></tr>
+  <tr><td><b>Razorpay</b></td><td>Standard</td><td>₹0 setup, ₹0 annual fee, ₹0 for refunds</td><td><b>2%</b> of each successful domestic payment (UPI, cards, net banking, wallets) <b>+ 18% GST on that fee</b>. Corporate credit cards 2.15%. International cards up to 3% + GST. <b>Monthly (subscription) card payments: an extra 0.9% per payment</b>. UPI/e-mandate subscription pricing is "on request" — confirm with Razorpay.</td></tr>
+  <tr><td><b>Resend</b></td><td>Free is enough for now</td><td>Free: 3,000 emails/month, max 100 per day. Pro: $20/month for 50,000 emails</td><td>None on Free. On Pro, extra emails cost about $0.90 per 1,000.</td></tr>
+  <tr><td><b>Vercel</b></td><td><b>Pro</b> recommended</td><td>Hobby $0 (but "personal, non-commercial use" only). Pro <b>$20/month</b> per user, includes $20 usage credit</td><td>Only if you exceed included usage; you can set a spending limit.</td></tr>
+  <tr><td><b>Google Sheets / Cloud</b></td><td>Free</td><td>₹0 at this volume</td><td>None expected.</td></tr>
+  <tr><td><b>Google Fonts</b></td><td>Free</td><td>₹0</td><td>—</td></tr>
+  <tr><td><b>Domain name</b></td><td>—</td><td>Yearly renewal — <b>amount unknown to us; check your registrar</b></td><td>—</td></tr>
+</table>
+
+<div class="box note"><b>Why we recommend Vercel Pro:</b> the free Hobby plan is for personal, non-commercial use and has hard limits. A website that collects donations and runs a daily job is better placed on Pro. Cost: about $20 per month (roughly ₹1,700–1,800 depending on the exchange rate). Ask Vercel whether any non-profit discount is available — we have not verified one.</div>
+
+<h3>Worked example: what the NGO actually receives</h3>
+<table>
+  <tr><th>Donation</th><th>Razorpay fee (2%)</th><th>GST on fee (18%)</th><th>Total deducted</th><th>Arrives in bank</th></tr>
+  <tr><td>₹500 one-time</td><td>₹10.00</td><td>₹1.80</td><td>₹11.80</td><td><b>₹488.20</b></td></tr>
+  <tr><td>₹1,000 one-time</td><td>₹20.00</td><td>₹3.60</td><td>₹23.60</td><td><b>₹976.40</b></td></tr>
+  <tr><td>₹5,000 one-time</td><td>₹100.00</td><td>₹18.00</td><td>₹118.00</td><td><b>₹4,882.00</b></td></tr>
+  <tr><td>₹1,000 monthly, <i>by card</i> (2% + 0.9% = 2.9%)</td><td>₹29.00</td><td>₹5.22</td><td>₹34.22</td><td><b>₹965.78</b></td></tr>
+</table>
+<p class="small">Illustrative only. The monthly-card line assumes the 0.9% subscription charge adds to the standard 2%; UPI AutoPay pricing may differ. Your actual deductions are always shown in the Razorpay Dashboard → Settlements / Payments. Money normally reaches the bank the next working day (T+1).</p>
+
+<h3>Rough yearly picture</h3>
+<ul>
+  <li>Fixed: Vercel Pro ≈ $240/year + domain renewal. Resend and Google: ₹0 while within the free limits.</li>
+  <li>Variable: about 2.36% of donations (2% + GST), a little more on monthly card donations.</li>
+</ul>
+<div class="box warn"><b>Watch the Resend free limit.</b> Free allows <b>100 emails per day</b> and 3,000 per month. A big fundraising day (e.g. 150 donors) would exceed 100 emails and later receipts would fail to send until the next day. Upgrade to Resend Pro ($20/month) before planning a campaign.</div>
+
+<!-- ===================== 6 ===================== -->
+<h2 class="pb">6. Where to look for what</h2>
+<table>
+  <tr><th style="width:38%">I want to know…</th><th style="width:22%">Go to</th><th>Exactly where</th></tr>
+  <tr><td>Did a donation come in? How much? Which method?</td><td>Razorpay</td><td>Dashboard → Transactions → Payments (switch to <b>Live</b> mode)</td></tr>
+  <tr><td>When will the money reach the bank?</td><td>Razorpay</td><td>Dashboard → Transactions → Settlements</td></tr>
+  <tr><td>What fee was charged?</td><td>Razorpay</td><td>Click a payment → Fee and GST are shown; or Reports</td></tr>
+  <tr><td>List of monthly donors, their status</td><td>Razorpay</td><td>Dashboard → Subscriptions (status: Active, Halted, Cancelled…)</td></tr>
+  <tr><td>Donor's name, address, nationality, PAN</td><td>Razorpay / Google Sheet</td><td>Razorpay: open the payment → <b>Notes</b>. Sheet: <b>Payments</b> tab</td></tr>
+  <tr><td>A simple list of all donations for Excel</td><td>Google Sheet</td><td><b>Payments</b> tab → File → Download → .xlsx / .csv</td></tr>
+  <tr><td>Who wants to volunteer?</td><td>Google Sheet</td><td><b>Volunteer</b> tab</td></tr>
+  <tr><td>Which organisations want to partner?</td><td>Google Sheet</td><td><b>Partner</b> tab</td></tr>
+  <tr><td>Newsletter subscribers</td><td>Google Sheet</td><td><b>Newsletter</b> tab</td></tr>
+  <tr><td>Did the donor get the receipt email?</td><td>Resend</td><td>Dashboard → Emails (Logs) → search the donor's email → status Delivered / Bounced</td></tr>
+  <tr><td>How many emails sent this month? Near the limit?</td><td>Resend</td><td>Dashboard → Usage (or Emails list)</td></tr>
+  <tr><td>Is the website live? Latest update published?</td><td>Vercel</td><td>Project <code>isaahasi-frontend</code> → Deployments</td></tr>
+  <tr><td>Did the daily monthly-receipt job run?</td><td>Vercel</td><td>Project → Settings → Cron Jobs (status/last run) and Logs</td></tr>
+  <tr><td>An error message / something failed</td><td>Vercel</td><td>Project → Logs (Runtime Logs), filter by "Error"</td></tr>
+  <tr><td>Change a secret key/setting</td><td>Vercel</td><td>Project → Settings → Environment Variables</td></tr>
+  <tr><td>Hosting bill / usage</td><td>Vercel</td><td>Team → Settings → Billing / Usage</td></tr>
+  <tr><td>Domain renewal date</td><td>Registrar</td><td>The registrar's website (see Section 13)</td></tr>
+  <tr><td>Add a compliance PDF to the site</td><td>Developer</td><td>See Section 8, task D</td></tr>
+</table>
+
+<!-- ===================== 7 ===================== -->
+<h2 class="pb">7. Service-by-service tutorial</h2>
+<p>For each service, log in and take the screenshots shown. Each screenshot box tells you what to open and what to highlight.</p>
+
+<h3>7.1 Razorpay</h3>
+<p>Login: <b>dashboard.razorpay.com</b>. Always check the <b>Test / Live</b> switch at the top of the page — real donations are only visible in <b>Live</b>.</p>
+<div class="shot"><span class="tag">SCREENSHOT 6</span> <b>Razorpay home with Test/Live toggle</b>
+  <dl><dt>Open</dt><dd>dashboard.razorpay.com after login.</dd><dt>Highlight</dt><dd>The Test/Live mode switch and the left menu.</dd><dt>Hide</dt><dd>Account email, balances if you prefer.</dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 7</span> <b>Payments list</b>
+  <dl><dt>Open</dt><dd>Transactions → Payments.</dd><dt>Highlight</dt><dd>Columns for Amount, Status (Captured), Method, Date.</dd><dt>Hide</dt><dd>Customer names, emails, phones.</dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 8</span> <b>One payment's detail page (with Notes)</b>
+  <dl><dt>Open</dt><dd>Click any payment.</dd><dt>Highlight</dt><dd>Fee &amp; GST lines; the <b>Notes</b> section (donor address, nationality, PAN).</dd><dt>Hide</dt><dd><b>PAN, address, email, phone — blur all.</b></dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 9</span> <b>Settlements</b>
+  <dl><dt>Open</dt><dd>Transactions → Settlements.</dd><dt>Highlight</dt><dd>Settlement date and amount.</dd><dt>Hide</dt><dd>Bank account digits.</dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 10</span> <b>Subscriptions list</b>
+  <dl><dt>Open</dt><dd>Subscriptions (under Payments products / left menu).</dd><dt>Highlight</dt><dd>Status column; the "Cancel" action inside a subscription.</dd><dt>Hide</dt><dd>Donor details.</dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 11</span> <b>Refund button</b>
+  <dl><dt>Open</dt><dd>Inside a payment detail page.</dd><dt>Highlight</dt><dd>The "Refund" button. (Do not click it.)</dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 12</span> <b>API keys page (to show where keys live — NOT their values)</b>
+  <dl><dt>Open</dt><dd>Account &amp; Settings → API Keys.</dd><dt>Capture</dt><dd>The page layout only.</dd><dt>Hide</dt><dd><b>Completely cover the Key ID and Key Secret.</b></dd></dl><div class="space">Paste screenshot here</div></div>
+
+<h3>7.2 Google Sheet</h3>
+<p>Open the spreadsheet from Google Drive (it is owned by the NGO's Google account). It has five tabs along the bottom.</p>
+<div class="shot"><span class="tag">SCREENSHOT 13</span> <b>The sheet's tabs</b>
+  <dl><dt>Capture</dt><dd>Bottom of the sheet showing the tabs Volunteer / Partner / Newsletter / Payments / Live Subscriptions.</dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 14</span> <b>Payments tab with a few rows</b>
+  <dl><dt>Highlight</dt><dd>Header row and the Donation Type, Amount, Payment Status columns.</dd><dt>Hide</dt><dd>Names, emails, mobiles.</dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 15</span> <b>Volunteer tab with a few rows</b>
+  <dl><dt>Hide</dt><dd>Names, emails, phones.</dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 16</span> <b>Share dialog showing the robot (service account) as Editor</b>
+  <dl><dt>Open</dt><dd>Share button (top right).</dd><dt>Highlight</dt><dd>The address ending in <code>iam.gserviceaccount.com</code> with role Editor. <b>It must never be removed.</b></dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 17</span> <b>How to download as Excel</b>
+  <dl><dt>Open</dt><dd>File → Download → Microsoft Excel (.xlsx).</dd><dt>Capture</dt><dd>The menu open.</dd></dl><div class="space">Paste screenshot here</div></div>
+
+<h3>7.3 Resend</h3>
+<p>Login: <b>resend.com</b>.</p>
+<div class="shot"><span class="tag">SCREENSHOT 18</span> <b>Emails (Logs) list</b>
+  <dl><dt>Open</dt><dd>Left menu → Emails.</dd><dt>Highlight</dt><dd>Status column (Delivered), subject "Your donation receipt — RCPT-…".</dd><dt>Hide</dt><dd>Recipient addresses.</dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 19</span> <b>One email's detail page</b>
+  <dl><dt>Highlight</dt><dd>Delivery timeline (Sent → Delivered) and the attachment.</dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 20</span> <b>Domains page</b>
+  <dl><dt>Open</dt><dd>Left menu → Domains.</dd><dt>Highlight</dt><dd>Your domain showing <b>Verified</b>.</dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 21</span> <b>Usage / plan page</b>
+  <dl><dt>Open</dt><dd>Settings → Billing or Usage.</dd><dt>Highlight</dt><dd>Current plan and emails used today / this month.</dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 22</span> <b>API Keys page (layout only)</b>
+  <dl><dt>Hide</dt><dd><b>Any key value.</b></dd></dl><div class="space">Paste screenshot here</div></div>
+
+<h3>7.4 Vercel</h3>
+<p>Login: <b>vercel.com</b>. Open project <code>isaahasi-frontend</code>.</p>
+<div class="shot"><span class="tag">SCREENSHOT 23</span> <b>Project overview</b>
+  <dl><dt>Highlight</dt><dd>The "Visit" button (your live site) and the latest deployment status (Ready).</dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 24</span> <b>Deployments list</b>
+  <dl><dt>Highlight</dt><dd>The "Production" tag and a "Ready" status. Explain: each update to the site creates a new row here.</dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 25</span> <b>Logs (Runtime Logs)</b>
+  <dl><dt>Open</dt><dd>Project → Logs.</dd><dt>Highlight</dt><dd>The filter for errors; a line from <code>/api/payments/verify-payment</code>.</dd><dt>Hide</dt><dd>Any personal data in log lines.</dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 26</span> <b>Cron Jobs</b>
+  <dl><dt>Open</dt><dd>Project → Settings → Cron Jobs.</dd><dt>Highlight</dt><dd>The path <code>/api/cron/send-subscription-receipts</code>, schedule <code>30 3 * * *</code> (= 9:00 AM IST daily), and the "Run" button.</dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 27</span> <b>Environment Variables page</b>
+  <dl><dt>Open</dt><dd>Project → Settings → Environment Variables.</dd><dt>Capture</dt><dd>The list of <b>names</b> only.</dd><dt>Hide</dt><dd><b>Never click "reveal"; all values must stay hidden.</b></dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 28</span> <b>Billing / plan page</b>
+  <dl><dt>Open</dt><dd>Team settings → Billing.</dd><dt>Highlight</dt><dd>The plan (Pro) and the spending limit setting.</dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 29</span> <b>Domains page</b>
+  <dl><dt>Open</dt><dd>Project → Settings → Domains.</dd><dt>Highlight</dt><dd>The domain showing "Valid Configuration".</dd></dl><div class="space">Paste screenshot here</div></div>
+
+<h3>The settings (environment variables) the site needs</h3>
+<p>These are the names of the secret settings stored in Vercel. <b>Values are never written in this document.</b></p>
+<table>
+  <tr><th>Name</th><th>What it is for</th><th>Where the value comes from</th></tr>
+  <tr><td><code>RAZORPAY_KEY_ID</code> / <code>VITE_RAZORPAY_KEY_ID</code></td><td>Public payment key (the second is the copy shown to the browser)</td><td>Razorpay → API Keys (Live)</td></tr>
+  <tr><td><code>RAZORPAY_KEY_SECRET</code></td><td>Private payment key</td><td>Razorpay → API Keys (shown once!)</td></tr>
+  <tr><td><code>RAZORPAY_WEBHOOK_SECRET</code></td><td>Verifies messages sent by Razorpay</td><td>Razorpay → Webhooks</td></tr>
+  <tr><td><code>GOOGLE_SERVICE_ACCOUNT_EMAIL</code>, <code>GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY</code></td><td>The robot's identity for writing to the sheet</td><td>Google Cloud → Service Accounts</td></tr>
+  <tr><td><code>GOOGLE_SHEETS_SPREADSHEET_ID</code></td><td>Which spreadsheet to write into</td><td>The long ID in the sheet's web address</td></tr>
+  <tr><td><code>RESEND_API_KEY</code>, <code>RESEND_FROM_EMAIL</code></td><td>Permission to send email, and the "from" address</td><td>Resend → API Keys / Domains</td></tr>
+  <tr><td><code>CRON_SECRET</code></td><td>A password that only Vercel's scheduler knows, so strangers cannot trigger the daily job</td><td>Made up by the developer, stored in Vercel</td></tr>
+</table>
+<p class="small">After changing any setting in Vercel you must <b>redeploy</b> (Deployments → ⋯ → Redeploy) for the change to take effect.</p>
+
+<!-- ===================== 8 ===================== -->
+<h2 class="pb">8. Everyday tasks</h2>
+
+<h3>A. Check today's donations (2 minutes)</h3>
+<ol><li>Razorpay → switch to <b>Live</b> → Transactions → Payments → filter Status = Captured.</li><li>Optionally cross-check the <b>Payments</b> tab in the Google Sheet.</li></ol>
+
+<h3>B. Cancel a monthly donor's subscription (on their request)</h3>
+<ol><li>Razorpay → Subscriptions → search the donor/subscription ID.</li><li>Open it → <b>Cancel subscription</b> (choose "cancel immediately" or "at end of current cycle").</li><li>No further charges happen. The row disappears from <b>Live Subscriptions</b> on the next daily run.</li></ol>
+
+<h3>C. Refund a donation</h3>
+<ol><li>Razorpay → Payments → open the payment → <b>Refund</b> → full or partial. Razorpay does not charge a fee for the refund itself (but the original fee is generally not returned — confirm with Razorpay).</li><li>Note: refunds are not emailed by our system; inform the donor yourself.</li></ol>
+
+<h3>D. Add a new compliance document to the website</h3>
+<p>This needs the developer (or someone comfortable with the code), because the list is part of the website:</p>
+<ol>
+  <li>Put the PDF file in the folder <code>public/compliance/</code>.</li>
+  <li>Open <code>src/data/complianceDocuments.ts</code> and add one line <code>{ name: "…", file: "…pdf" }</code> in the right section, newest first.</li>
+  <li>Publish (push to the main branch); Vercel automatically rebuilds the site in about a minute.</li>
+  <li>Check on the live <code>/compliance</code> page that the file opens.</li>
+</ol>
+
+<h3>E. Publish a change to the website</h3>
+<p>Changes to text, images or pages are made in the code by the developer and uploaded to the code repository. Vercel notices and publishes automatically. Watch it under Vercel → Deployments (Building → Ready). If a deployment fails, the previous good version stays live.</p>
+
+<h3>F. Practise with test mode</h3>
+<ul>
+  <li>Razorpay Test mode uses separate "test" keys and fake money — nothing is charged.</li>
+  <li>Use Razorpay's published test card/UPI details from their documentation.</li>
+  <li>The site shows test or live behaviour depending on which keys are saved in Vercel — <b>do not leave test keys in production</b>.</li>
+</ul>
+
+<h3>G. Run the monthly-receipt job right now (if you don't want to wait until morning)</h3>
+<p><b>Easiest:</b> Vercel → Project → Settings → Cron Jobs → click <b>Run</b> next to <code>send-subscription-receipts</code>. The developer can alternatively call the endpoint with the CRON_SECRET. The result shows counts such as <code>processed</code>, <code>receiptsSent</code>, <code>failed</code>. Running it twice is safe: a receipt is never emailed twice.</p>
+
+<h3>H. Download a report for audit / accountant</h3>
+<ol><li>Razorpay → Reports → choose Payments / Settlements and a date range → download.</li><li>Google Sheet → Payments tab → File → Download → Excel.</li></ol>
+
+<div class="shot"><span class="tag">SCREENSHOT 30</span> <b>Razorpay subscription → Cancel button</b>
+  <dl><dt>Open</dt><dd>Any subscription detail page.</dd><dt>Highlight</dt><dd>Cancel Subscription. (Do not click.)</dd></dl><div class="space">Paste screenshot here</div></div>
+<div class="shot"><span class="tag">SCREENSHOT 31</span> <b>Razorpay Reports page</b>
+  <dl><dt>Highlight</dt><dd>Report type and date range selectors, Download button.</dd></dl><div class="space">Paste screenshot here</div></div>
+
+<!-- ===================== 9 ===================== -->
+<h2 class="pb">9. When something goes wrong</h2>
+<table>
+  <tr><th style="width:30%">Problem</th><th style="width:34%">Likely cause</th><th>What to do</th></tr>
+  <tr><td>Donor paid but did not get a receipt</td><td>Email in spam, typo in email, Resend daily limit hit, or email failed after payment (the payment itself is still safe)</td><td>1) Ask them to check spam. 2) Resend → Emails → search their address. 3) If missing, check Vercel Logs for errors around that time. 4) Ask the developer to resend the receipt. Money is safe in Razorpay.</td></tr>
+  <tr><td>Monthly donor says no receipt for this month</td><td>Daily job hasn't run yet, or job error</td><td>Vercel → Cron Jobs → Run. Check Logs. Check Resend.</td></tr>
+  <tr><td>Donor's money was deducted but the site showed an error</td><td>Browser closed / network drop</td><td>Check Razorpay Payments. If status is <b>Captured</b>, the money is yours; send a receipt manually via the developer. If <b>Failed</b>/<b>Authorized</b>, the bank will auto-refund within 5–7 working days.</td></tr>
+  <tr><td>Form submissions are not appearing in the sheet</td><td>Sheet no longer shared with the robot, tab renamed, or wrong sheet ID</td><td>Check Share dialog (Screenshot 16), tab names exactly as in Section 3, then Vercel logs.</td></tr>
+  <tr><td>Donate button shows a payment error</td><td>Test/Live keys mixed up, or keys expired</td><td>Check the Razorpay keys in Vercel Environment Variables match Live mode; redeploy.</td></tr>
+  <tr><td>Whole website not loading</td><td>Domain expired, or Vercel account/billing problem</td><td>Check domain renewal at the registrar, then Vercel billing and Deployments.</td></tr>
+  <tr><td>Emails not sending at all</td><td>Resend domain no longer verified, or API key revoked</td><td>Resend → Domains (should be Verified), API Keys.</td></tr>
+</table>
+
+<!-- ===================== 10 ===================== -->
+<h2 class="pb">10. Launch checklist (before real donations)</h2>
+<div class="box warn">Tick each item. Any unticked item can mean lost donations or missing receipts.</div>
+<table>
+  <tr><th style="width:6%">✓</th><th>Item</th></tr>
+  <tr><td>☐</td><td>Razorpay KYC approved and <b>Live mode</b> activated.</td></tr>
+  <tr><td>☐</td><td>Live <code>RAZORPAY_KEY_ID</code>, <code>VITE_RAZORPAY_KEY_ID</code> and <code>RAZORPAY_KEY_SECRET</code> saved in Vercel <b>Production</b> environment (not test keys).</td></tr>
+  <tr><td>☐</td><td>Live-mode <b>webhook</b> created in Razorpay pointing to <code>/api/razorpay/webhook</code> with its secret saved as <code>RAZORPAY_WEBHOOK_SECRET</code> (note: monthly receipts do not depend on it, but payment records do).</td></tr>
+  <tr><td>☐</td><td><code>CRON_SECRET</code> set in Vercel Production; the cron job appears under Settings → Cron Jobs.</td></tr>
+  <tr><td>☐</td><td>Google Sheet has all five tabs with the exact header names; shared with the service-account email as <b>Editor</b>.</td></tr>
+  <tr><td>☐</td><td>Resend domain <b>Verified</b>; <code>RESEND_FROM_EMAIL</code> uses that domain; <code>RESEND_API_KEY</code> saved.</td></tr>
+  <tr><td>☐</td><td>Vercel plan upgraded to <b>Pro</b> (commercial use) with a spending limit.</td></tr>
+  <tr><td>☐</td><td>Make one real ₹1 / small one-time donation and one monthly donation; confirm: payment in Razorpay, row in Payments, receipt email received, copy at info.isaahasi@gmail.com. Then cancel the test subscription and refund.</td></tr>
+  <tr><td>☐</td><td>Real Instagram and LinkedIn links put in the footer; "Terms of Use" page created or the text removed.</td></tr>
+  <tr><td>☐</td><td>Debug endpoint removed (see Section 11).</td></tr>
+  <tr><td>☐</td><td>Account ownership register (Section 13) filled in and passwords stored safely.</td></tr>
+</table>
+
+<!-- ===================== 11 ===================== -->
+<h2 class="pb">11. Security and privacy — what to protect</h2>
+<h3>Rules for everyone</h3>
+<ul>
+  <li><b>Never</b> email or WhatsApp secret keys, passwords or the Razorpay Key Secret. Never post them in screenshots.</li>
+  <li>Turn on <b>two-step verification</b> on Razorpay, Google, Resend, Vercel, your domain registrar and the code repository.</li>
+  <li>Use accounts owned by the <b>NGO</b> (a shared office email like info@…), not a single person's private email, so access survives staff changes.</li>
+  <li>Donor PAN, address and phone are <b>personal data</b>. Limit the Google Sheet's sharing to the few people who need it; remove access when someone leaves.</li>
+</ul>
+
+<h3>Points to fix or be aware of (for the developer and the board)</h3>
+<table>
+  <tr><th style="width:5%">#</th><th style="width:34%">Issue</th><th>Recommendation</th></tr>
+  <tr><td>1</td><td class="blank"><b>A "debug-env" page is publicly reachable</b> at <code>/api/debug-env</code>. It lists the names and lengths of the secret settings (not the values) to anyone who visits.</td><td><b>Delete it before launch.</b> It leaks information useful to attackers.</td></tr>
+  <tr><td>2</td><td>PAN and address are stored in Razorpay's "notes" and in the Sheet.</td><td>Keep access restricted; consider whether storing PAN is needed beyond tax-receipt purposes; follow India's DPDP Act obligations (consent, purpose, deletion on request).</td></tr>
+  <tr><td>3</td><td>Resend is a US company and keeps email logs for about 30 days on the free plan (receipts, which contain donor names).</td><td>Mention this in the Privacy Policy; DPDP considerations apply to cross-border processing.</td></tr>
+  <tr><td>4</td><td>Receipt PDFs are not password-protected.</td><td>Acceptable for receipts; just be aware an email forwarded can be read by anyone.</td></tr>
+  <tr><td>5</td><td>The Razorpay webhook cannot be reliably edited on the existing dashboard setup, so payment records in the Sheet may miss entries from some events.</td><td>Use the Razorpay Dashboard as the source of truth for money; the Sheet is a convenience copy. Set up a Live webhook properly at launch.</td></tr>
+  <tr><td>6</td><td>One Razorpay "plan" is created for every monthly donation.</td><td>Harmless but clutters Razorpay → Plans. A future improvement can reuse plans per amount.</td></tr>
+  <tr><td>7</td><td>Instagram/LinkedIn icons in the footer do not go anywhere; "Terms of Use" is not clickable.</td><td>Add real links/page.</td></tr>
+  <tr><td>8</td><td>Vercel Hobby plan is non-commercial.</td><td>Use Pro (Section 5).</td></tr>
+</table>
+
+<div class="box bad"><b>If you suspect a secret key was exposed</b> (posted in chat, in a screenshot, in a public place): in Razorpay → API Keys, <b>regenerate</b> the key; update it in Vercel; redeploy. Do the same for Resend and Google keys.</div>
+
+<!-- ===================== 12 ===================== -->
+<h2 class="pb">12. Screenshot checklist</h2>
+<p>Tick when captured. Total: <b>31 screenshots</b>.</p>
+<table>
+  <tr><th style="width:8%">No.</th><th>What</th><th style="width:22%">Section</th><th style="width:8%">Done</th></tr>
+  <tr><td>1</td><td>Website home page, Donate button boxed</td><td>1</td><td>☐</td></tr>
+  <tr><td>2</td><td>Volunteer and Partner forms</td><td>2</td><td>☐</td></tr>
+  <tr><td>3–4</td><td>Donation window: once / monthly</td><td>3</td><td>☐</td></tr>
+  <tr><td>5</td><td>Receipt email and PDF</td><td>3</td><td>☐</td></tr>
+  <tr><td>6–12</td><td>Razorpay: home toggle, payments, payment detail, settlements, subscriptions, refund, API keys page</td><td>7.1</td><td>☐</td></tr>
+  <tr><td>13–17</td><td>Google Sheet: tabs, Payments, Volunteer, Share dialog, download menu</td><td>7.2</td><td>☐</td></tr>
+  <tr><td>18–22</td><td>Resend: emails list, email detail, domains, usage, API keys page</td><td>7.3</td><td>☐</td></tr>
+  <tr><td>23–29</td><td>Vercel: overview, deployments, logs, cron, env variable names, billing, domains</td><td>7.4</td><td>☐</td></tr>
+  <tr><td>30–31</td><td>Razorpay cancel button, Reports page</td><td>8</td><td>☐</td></tr>
+</table>
+<h3>How to hide sensitive information in a screenshot</h3>
+<ul>
+  <li><b>Mac:</b> Cmd+Shift+4 to capture; open in Preview → Markup (pen icon) → draw a <b>solid black rectangle</b> over sensitive text → Export. (Do not just blur lightly; use solid black.)</li>
+  <li><b>Windows:</b> Win+Shift+S to capture; paste into Paint or Snipping Tool and draw a filled black box.</li>
+  <li>Always cover: API keys and secrets, PAN, full email addresses, phone numbers, bank account numbers, donor names.</li>
+  <li>Prefer a <b>test payment made by yourself</b> as the sample, so no real donor appears.</li>
+</ul>
+
+<!-- ===================== 13 ===================== -->
+<h2 class="pb">13. Account ownership register</h2>
+<p>Fill this in by hand and keep the passwords in a proper password manager (not in this document).</p>
+<table>
+  <tr><th style="width:18%">Service</th><th style="width:22%">Website</th><th style="width:25%">Account owner email</th><th style="width:15%">2-step on?</th><th>Renewal / billing date</th></tr>
+  <tr class="blank"><td>Razorpay</td><td>dashboard.razorpay.com</td><td>&nbsp;</td><td>&nbsp;</td><td>—</td></tr>
+  <tr class="blank"><td>Google (Sheet &amp; Cloud)</td><td>drive.google.com · console.cloud.google.com</td><td>&nbsp;</td><td>&nbsp;</td><td>—</td></tr>
+  <tr class="blank"><td>Resend</td><td>resend.com</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr class="blank"><td>Vercel</td><td>vercel.com</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr class="blank"><td>Domain registrar</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr class="blank"><td>Code repository</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>—</td></tr>
+  <tr class="blank"><td>Developer contact</td><td>—</td><td>&nbsp;</td><td>—</td><td>—</td></tr>
+</table>
+
+<h3>Useful contacts</h3>
+<ul>
+  <li>NGO public contact: isaahasiindia@gmail.com · +91 9920852249</li>
+  <li>Receipt copies arrive at: info.isaahasi@gmail.com</li>
+  <li>Razorpay support: via the "Help" icon in the Razorpay dashboard</li>
+  <li>Resend and Vercel support: via their dashboards</li>
+</ul>
+
+<h3>Glossary</h3>
+<table>
+  <tr><td style="width:22%"><b>Deployment</b></td><td>One published version of the website.</td></tr>
+  <tr><td><b>Cron job</b></td><td>A task that runs automatically on a schedule (here, daily at 9:00 AM IST).</td></tr>
+  <tr><td><b>Webhook</b></td><td>An automatic message that Razorpay sends to the website when something happens.</td></tr>
+  <tr><td><b>Environment variable</b></td><td>A secret setting (key/password) stored in Vercel, not in the code.</td></tr>
+  <tr><td><b>Service account</b></td><td>A robot Google identity the website uses to write into your Sheet.</td></tr>
+  <tr><td><b>Settlement</b></td><td>Razorpay paying collected money into your bank account.</td></tr>
+  <tr><td><b>Subscription / Plan</b></td><td>A recurring monthly donation arrangement, and the amount template behind it.</td></tr>
+  <tr><td><b>T+1</b></td><td>Money reaches the bank one working day after the payment.</td></tr>
+</table>
+
+<p class="small" style="margin-top:24px;">End of document. Prices and screen layouts of third-party services change over time; if a button has moved, use the service's search or Help.</p>
+
+</body>
+</html>

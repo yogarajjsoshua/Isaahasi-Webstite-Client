@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './HomePage.css';
-import jeevanAadharLogo from '../assets/images/home/partners/jeevan-aadhar.jpg';
-import btcLogo from '../assets/images/home/partners/btc.png';
-import catherinesLogo from '../assets/images/home/partners/catherines.png';
-import tmiLogo from '../assets/images/home/partners/tmi.png';
-import ywcaLogo from '../assets/images/home/partners/ywca.png';
-import ellysAcademyLogo from '../assets/images/home/partners/ellys-academy.png';
-import actLogo from '../assets/images/home/partners/act.jpg';
-import buddyTeaching from '../assets/images/home/buddy-teaching.jpg';
-import img2134 from '../assets/images/home/img-2134.jpg';
-import img2324 from '../assets/images/home/img-2324.jpg';
-import img2280 from '../assets/images/home/img-2280.jpg';
-import img2223 from '../assets/images/home/img-2223.jpg';
-import img2344 from '../assets/images/home/img-2344.png';
-import img2360 from '../assets/images/home/img-2360.png';
-import img2351 from '../assets/images/home/img-2351.png';
+import jeevanAadharLogo from '../assets/images/home/partners/jeevan-aadhar.webp';
+import btcLogo from '../assets/images/home/partners/btc.webp';
+import catherinesLogo from '../assets/images/home/partners/catherines.webp';
+import tmiLogo from '../assets/images/home/partners/tmi.webp';
+import ywcaLogo from '../assets/images/home/partners/ywca.webp';
+import ellysAcademyLogo from '../assets/images/home/partners/ellys-academy.webp';
+import actLogo from '../assets/images/home/partners/act.webp';
+import buddyTeaching from '../assets/images/home/buddy-teaching.webp';
+import img2134 from '../assets/images/home/img-2134.webp';
+import img2324 from '../assets/images/home/img-2324.webp';
+import img2280 from '../assets/images/home/img-2280.webp';
+import img2223 from '../assets/images/home/img-2223.webp';
+import img2344 from '../assets/images/home/img-2344.webp';
+import img2360 from '../assets/images/home/img-2360.webp';
+import img2351 from '../assets/images/home/img-2351.webp';
 import { formService } from '../services/formService';
 
 export const HomePage: React.FC = () => {
@@ -65,7 +65,7 @@ export const HomePage: React.FC = () => {
 
     setLoading(true);
     try {
-      await formService.submit({ type: 'newsletter', data: { email } });
+      await formService.submit({ type: 'newsletter', data: { email: email.trim() } });
       setMessage({ type: 'success', text: 'Thank you for subscribing!' });
       setEmail('');
     } catch {

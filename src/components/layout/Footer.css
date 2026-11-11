@@ -128,7 +128,7 @@
   min-width: 0;
 }
 
-/* logo.png is 3165x4096 with the artwork in a band near the top; crop it like the Figma design */
+/* logo.webp is 3165x4096 with the artwork in a band near the top; crop it like the Figma design */
 .footer-logo {
   position: relative;
   width: 100%;

@@ -1,6 +1,6 @@
 import React from 'react';
 import './VisionPage.css';
-import heroImage from '../assets/images/vision/hero.jpg';
+import heroImage from '../assets/images/vision/hero.webp';
 import handshakeIcon from '../assets/icons/vision/handshake.svg';
 import agencyIcon from '../assets/icons/vision/agency.svg';
 import communityIcon from '../assets/icons/vision/community.svg';

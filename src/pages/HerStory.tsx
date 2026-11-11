@@ -1,9 +1,9 @@
 import React from 'react';
 import './HerStory.css';
-import imgHero from '../assets/images/her-story/hero.jpg';
-import imgSeemaBg from '../assets/images/her-story/seema-bg.jpg';
-import imgRubyBg from '../assets/images/her-story/ruby-bg.jpg';
-import imgRachnaBg from '../assets/images/her-story/rachna-bg.jpg';
+import imgHero from '../assets/images/her-story/hero.webp';
+import imgSeemaBg from '../assets/images/her-story/seema-bg.webp';
+import imgRubyBg from '../assets/images/her-story/ruby-bg.webp';
+import imgRachnaBg from '../assets/images/her-story/rachna-bg.webp';
 import imgDivider from '../assets/icons/her-story/divider.svg';
 
 interface Story {

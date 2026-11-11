@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Input } from '../components/ui';
 import { formService } from '../services/formService';
 import type { VolunteerFormData } from '../types';
-import heroHands from '../assets/images/volunteer/hero-hands.png';
+import heroHands from '../assets/images/volunteer/hero-hands.webp';
 import './VolunteerPage.css';
 import './PartnerPage.css';
 
@@ -27,7 +27,11 @@ export const VolunteerPage: React.FC = () => {
   const validate = (): boolean => {
     const newErrors: Partial<Record<keyof VolunteerFormData, string>> = {};
 
-    if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required';
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = 'Full name is required';
+    } else if (!formService.validateName(formData.fullName)) {
+      newErrors.fullName = 'Enter a valid name (at least 2 characters)';
+    }
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!formService.validateEmail(formData.email)) {
@@ -36,9 +40,10 @@ export const VolunteerPage: React.FC = () => {
     if (!formData.mobileNumber.trim()) {
       newErrors.mobileNumber = 'Mobile number is required';
     } else if (!formService.validatePhone(formData.mobileNumber)) {
-      newErrors.mobileNumber = 'Invalid phone number';
+      newErrors.mobileNumber = 'Enter a valid 10-digit Indian mobile number';
     }
-    if (!formData.message.trim()) newErrors.message = 'Message is required';
+    const messageError = formService.validateMessage(formData.message);
+    if (messageError) newErrors.message = messageError;
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -52,7 +57,14 @@ export const VolunteerPage: React.FC = () => {
 
     setLoading(true);
     try {
-      await formService.submit({ type: 'volunteer', data: formData });
+      const cleaned = {
+        ...formData,
+        fullName: formData.fullName.trim(),
+        email: formData.email.trim(),
+        mobileNumber: formService.normalizePhone(formData.mobileNumber) ?? formData.mobileNumber,
+        message: formData.message.trim(),
+      };
+      await formService.submit({ type: 'volunteer', data: cleaned });
       setMessage({ type: 'success', text: 'Thank you for your interest! We will contact you soon.' });
       setFormData({ fullName: '', email: '', mobileNumber: '', message: '' });
     } catch (error) {
@@ -112,6 +124,9 @@ export const VolunteerPage: React.FC = () => {
                 id="mobileNumber"
                 name="mobileNumber"
                 type="tel"
+                inputMode="numeric"
+                maxLength={15}
+                autoComplete="tel-national"
                 placeholder="Enter Mobile Number"
                 required
                 value={formData.mobileNumber}

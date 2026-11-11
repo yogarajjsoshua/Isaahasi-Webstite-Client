@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
-import isahasiLogoFooter from '../../assets/images/footer/logo.png';
+import isahasiLogoFooter from '../../assets/images/footer/logo.webp';
 import instagramIcon from '../../assets/icons/footer/instagram.svg';
 import linkedinIcon from '../../assets/icons/footer/linkedin.svg';
 import { DonateModal } from '../DonateModal';

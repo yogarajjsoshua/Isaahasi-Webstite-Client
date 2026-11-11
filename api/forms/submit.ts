@@ -1,4 +1,12 @@
 import { appendFormRow } from '../_lib/sheets.js';
+import {
+  MESSAGE_MAX_WORDS,
+  MESSAGE_MIN_WORDS,
+  countWords,
+  isValidEmail,
+  isValidName,
+  normalizeIndianMobile,
+} from '../_lib/validation.js';
 
 type FormType = 'volunteer' | 'partner' | 'newsletter';
 
@@ -67,8 +75,40 @@ export async function POST(request: Request) {
     return Response.json({ error: `Missing or invalid field: ${missingField}` }, { status: 400 });
   }
 
+  const cleaned: Record<string, string> = {};
+  for (const [key, value] of Object.entries(data)) {
+    if (typeof value === 'string') cleaned[key] = value.trim();
+  }
+
+  if (!isValidEmail(cleaned.email)) {
+    return Response.json({ error: 'Invalid email address' }, { status: 400 });
+  }
+
+  if (type !== 'newsletter') {
+    if (!isValidName(cleaned.fullName)) {
+      return Response.json({ error: 'Invalid full name' }, { status: 400 });
+    }
+    const mobile = normalizeIndianMobile(cleaned.mobileNumber);
+    if (!mobile) {
+      return Response.json({ error: 'Invalid mobile number' }, { status: 400 });
+    }
+    cleaned.mobileNumber = mobile;
+
+    const words = countWords(cleaned.message);
+    if (words < MESSAGE_MIN_WORDS || words > MESSAGE_MAX_WORDS) {
+      return Response.json(
+        { error: `Message must be ${MESSAGE_MIN_WORDS}-${MESSAGE_MAX_WORDS} words` },
+        { status: 400 }
+      );
+    }
+  }
+
+  if (type === 'partner' && cleaned.organisationName.length < 2) {
+    return Response.json({ error: 'Invalid organisation name' }, { status: 400 });
+  }
+
   try {
-    await appendFormRow(SHEET_NAMES[type], buildRow(type, data));
+    await appendFormRow(SHEET_NAMES[type], buildRow(type, cleaned));
 
     return Response.json({ success: true });
   } catch (err) {

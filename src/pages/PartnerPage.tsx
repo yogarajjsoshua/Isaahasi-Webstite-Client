@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Input } from '../components/ui';
 import { formService } from '../services/formService';
 import type { PartnerFormData } from '../types';
-import heroCollage from '../assets/images/partner/hero-collage.jpg';
-import infoImage1 from '../assets/images/partner/info-1.jpg';
-import infoImage2 from '../assets/images/partner/info-2.jpg';
-import infoImage3 from '../assets/images/partner/info-3.jpg';
+import heroCollage from '../assets/images/partner/hero-collage.webp';
+import infoImage1 from '../assets/images/partner/info-1.webp';
+import infoImage2 from '../assets/images/partner/info-2.webp';
+import infoImage3 from '../assets/images/partner/info-3.webp';
 import './PartnerPage.css';
 
 export const PartnerPage: React.FC = () => {
@@ -30,8 +30,16 @@ export const PartnerPage: React.FC = () => {
   const validate = (): boolean => {
     const newErrors: Partial<Record<keyof PartnerFormData, string>> = {};
 
-    if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required';
-    if (!formData.organisationName.trim()) newErrors.organisationName = 'Organisation name is required';
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = 'Full name is required';
+    } else if (!formService.validateName(formData.fullName)) {
+      newErrors.fullName = 'Enter a valid name (at least 2 characters)';
+    }
+    if (!formData.organisationName.trim()) {
+      newErrors.organisationName = 'Organisation name is required';
+    } else if (formData.organisationName.trim().length < 2) {
+      newErrors.organisationName = 'Enter a valid organisation name';
+    }
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!formService.validateEmail(formData.email)) {
@@ -40,9 +48,10 @@ export const PartnerPage: React.FC = () => {
     if (!formData.mobileNumber.trim()) {
       newErrors.mobileNumber = 'Mobile number is required';
     } else if (!formService.validatePhone(formData.mobileNumber)) {
-      newErrors.mobileNumber = 'Invalid phone number';
+      newErrors.mobileNumber = 'Enter a valid 10-digit Indian mobile number';
     }
-    if (!formData.message.trim()) newErrors.message = 'Message is required';
+    const messageError = formService.validateMessage(formData.message);
+    if (messageError) newErrors.message = messageError;
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -56,7 +65,15 @@ export const PartnerPage: React.FC = () => {
 
     setLoading(true);
     try {
-      await formService.submit({ type: 'partner', data: formData });
+      const cleaned = {
+        ...formData,
+        fullName: formData.fullName.trim(),
+        organisationName: formData.organisationName.trim(),
+        email: formData.email.trim(),
+        mobileNumber: formService.normalizePhone(formData.mobileNumber) ?? formData.mobileNumber,
+        message: formData.message.trim(),
+      };
+      await formService.submit({ type: 'partner', data: cleaned });
       setMessage({ type: 'success', text: 'Thank you for your interest! We will contact you soon.' });
       setFormData({ fullName: '', organisationName: '', email: '', mobileNumber: '', message: '' });
     } catch (error) {
@@ -133,6 +150,9 @@ export const PartnerPage: React.FC = () => {
                 id="mobileNumber"
                 name="mobileNumber"
                 type="tel"
+                inputMode="numeric"
+                maxLength={15}
+                autoComplete="tel-national"
                 placeholder="Enter Mobile Number"
                 required
                 value={formData.mobileNumber}

@@ -1,7 +1,7 @@
 import React from 'react';
 import './OurStoryPage.css';
-import imgRectangle70 from '../assets/images/our-story/hero.png';
-import imgSurekhaA31 from '../assets/images/our-story/vision-board.png';
+import imgRectangle70 from '../assets/images/our-story/hero.webp';
+import imgSurekhaA31 from '../assets/images/our-story/vision-board.webp';
 
 interface TimelineEvent {
   year: string;

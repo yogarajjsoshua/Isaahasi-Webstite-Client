@@ -1,4 +1,5 @@
 import Razorpay from 'razorpay';
+import { isValidAmount, validateDonor } from '../_lib/validation.js';
 import { addLiveSubscriptionRow } from '../_lib/subscriptionReceipts.js';
 
 const razorpay = new Razorpay({
@@ -45,11 +46,12 @@ export async function POST(request: Request) {
   if (type !== 'monthly') {
     return Response.json({ error: 'Invalid donation type for this endpoint' }, { status: 400 });
   }
-  if (!Number.isFinite(amount) || amount < 1) {
+  if (!isValidAmount(amount)) {
     return Response.json({ error: 'Invalid amount' }, { status: 400 });
   }
-  if (!donor?.fullName || !donor?.email || !donor?.mobileNumber) {
-    return Response.json({ error: 'Missing donor details' }, { status: 400 });
+  const donorError = validateDonor(donor);
+  if (donorError) {
+    return Response.json({ error: donorError }, { status: 400 });
   }
 
   try {

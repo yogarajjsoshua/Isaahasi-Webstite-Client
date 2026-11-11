@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import imgRectangle77 from '../assets/images/our-work/hero-quote.jpg';
-import imgImg57832 from '../assets/images/our-work/bridge-photo.png';
-import imgRectangle102 from '../assets/images/our-work/education.jpg';
-import imgRectangle105 from '../assets/images/our-work/health-1.jpg';
-import imgRectangle106 from '../assets/images/our-work/health-2.jpg';
-import imgRectangle108 from '../assets/images/our-work/employment-1.jpg';
-import imgRectangle109 from '../assets/images/our-work/employment-2.jpg';
-import imgRectangle107 from '../assets/images/our-work/community.jpg';
+import imgRectangle77 from '../assets/images/our-work/hero-quote.webp';
+import imgImg57832 from '../assets/images/our-work/bridge-photo.webp';
+import imgRectangle102 from '../assets/images/our-work/education.webp';
+import imgRectangle105 from '../assets/images/our-work/health-1.webp';
+import imgRectangle106 from '../assets/images/our-work/health-2.webp';
+import imgRectangle108 from '../assets/images/our-work/employment-1.webp';
+import imgRectangle109 from '../assets/images/our-work/employment-2.webp';
+import imgRectangle107 from '../assets/images/our-work/community.webp';
 import imgStreamlineQualityEducation from '../assets/icons/our-work/quality-education.svg';
 import imgFluentMdl2Health from '../assets/icons/our-work/health.svg';
 import imgFluentPeopleCommunity32Regular from '../assets/icons/our-work/community.svg';
@@ -159,7 +159,7 @@ export const OurWork: React.FC = () => {
       </section>
 
       {/* Health Detail */}
-      <section className="pillar-detail pillar-detail--beige">
+      <section className="pillar-detail pillar-detail--health">
         <h3 className="pillar-detail-title">Health</h3>
         <div className="pillar-detail-row">
           <div className="pillar-detail-images">

@@ -88,7 +88,7 @@ export async function sendReceiptEmail(input: ReceiptEmailInput): Promise<SendRe
       : `Your monthly donation receipt — ${input.receiptNo}`
     : `Your donation receipt — ${input.receiptNo}`;
 
-  const html = isMonthly
+  const bodyHtml = isMonthly
     ? `
       <p>Dear ${input.donorName},</p>
       <p>Thank you for your continued generosity! We've received this month's installment${
@@ -108,6 +108,16 @@ export async function sendReceiptEmail(input: ReceiptEmailInput): Promise<SendRe
       records — it may be required for tax purposes.</p>
       <p>With gratitude,<br/>iSaahasi Academy India Foundation</p>
     `;
+
+  const disclaimerHtml = `
+      <hr style="border:none;border-top:1px solid #dddddd;margin:24px 0 12px;"/>
+      <p style="font-size:12px;color:#777777;line-height:1.5;">
+        <strong>Disclaimer:</strong> This is an auto-generated email sent from a system mailbox that is
+        not monitored. Please do not reply to this email, as replies cannot be received or answered.
+      </p>
+    `;
+
+  const html = bodyHtml + disclaimerHtml;
 
   const { data, error } = await resend.emails.send(
     {

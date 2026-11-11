@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './DonateModal.css';
 import { paymentService, type DonationStatus } from '../services/paymentService';
-import imgRectangle20 from '../assets/images/donate/hero-bg.jpg';
+import { formService } from '../services/formService';
+import imgRectangle20 from '../assets/images/donate/hero-bg.webp';
 import imgMaterialSymbolsClose from '../assets/icons/donate/close.svg';
 
 type DonateModalProps = {
@@ -24,26 +25,54 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
     pan: ''
   });
 
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<DonationStatus>('idle');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const presetAmounts = [500, 1000, 5000];
   const isBusy = BUSY_STATUSES.includes(status);
 
+  const clearError = (field: string) => {
+    if (fieldErrors[field]) setFieldErrors(prev => ({ ...prev, [field]: '' }));
+  };
+
+  const validate = (amount: number): Record<string, string> => {
+    const errs: Record<string, string> = {};
+
+    if (selectedAmount === null && customAmount.trim() === '') {
+      errs.amount = 'Please choose or enter a donation amount';
+    } else if (!paymentService.validateAmount(amount)) {
+      errs.amount = 'Enter a valid amount between ₹1 and ₹10,00,000';
+    }
+
+    if (!formData.fullName.trim()) errs.fullName = 'Full name is required';
+    else if (!formService.validateName(formData.fullName)) errs.fullName = 'Enter a valid name (at least 2 characters)';
+
+    if (!formData.email.trim()) errs.email = 'Email is required';
+    else if (!formService.validateEmail(formData.email)) errs.email = 'Invalid email format';
+
+    if (!formData.mobile.trim()) errs.mobile = 'Mobile number is required';
+    else if (!formService.validatePhone(formData.mobile)) errs.mobile = 'Enter a valid 10-digit Indian mobile number';
+
+    if (!formData.address.trim()) errs.address = 'Address is required';
+    else if (formData.address.trim().length < 5) errs.address = 'Enter your complete address';
+
+    if (!formData.pan.trim()) errs.pan = 'PAN number is required';
+    else if (!paymentService.validatePAN(formData.pan.trim().toUpperCase())) errs.pan = 'Enter a valid PAN (e.g. ABCDE1234F)';
+
+    return errs;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const amount = selectedAmount ?? Number(customAmount);
 
-    if (!paymentService.validateAmount(amount)) {
-      setErrorMessage('Please enter a valid donation amount.');
-      setStatus('failure');
-      return;
-    }
-
-    if (!paymentService.validatePAN(formData.pan.toUpperCase())) {
-      setErrorMessage('Please enter a valid PAN number.');
-      setStatus('failure');
+    const errs = validate(amount);
+    setFieldErrors(errs);
+    if (Object.keys(errs).length > 0) {
+      setErrorMessage(null);
+      setStatus('idle');
       return;
     }
 
@@ -54,12 +83,12 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
         amount,
         type: selectedTab,
         donor: {
-          fullName: formData.fullName,
-          email: formData.email,
-          mobileNumber: formData.mobile,
-          address: formData.address,
+          fullName: formData.fullName.trim(),
+          email: formData.email.trim(),
+          mobileNumber: formService.normalizePhone(formData.mobile) ?? formData.mobile,
+          address: formData.address.trim(),
           nationality,
-          panNumber: formData.pan.toUpperCase(),
+          panNumber: formData.pan.trim().toUpperCase(),
         },
       },
       (nextStatus, message) => {
@@ -153,10 +182,10 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
             </button>
           </div>
 
-          <form onSubmit={handleSubmit} className="donate-modal-form">
+          <form onSubmit={handleSubmit} className="donate-modal-form" noValidate>
             {/* Amount Selection */}
             <div className="donate-form-section">
-              <label className="donate-form-label">Choose an Amount</label>
+              <label className="donate-form-label">Choose an Amount *</label>
               <div className="donate-amount-options">
                 {presetAmounts.map((amount) => (
                   <button
@@ -166,8 +195,9 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
                     onClick={() => {
                       setSelectedAmount(amount);
                       setCustomAmount(String(amount));
+                      clearError('amount');
                     }}
-                    disabled={isBusy}
+                  disabled={isBusy}
                   >
                     ₹{amount}
                   </button>
@@ -177,16 +207,20 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
                 <div className="donate-currency-prefix">₹</div>
                 <input
                   type="number"
+                  min={1}
+                  max={1000000}
                   placeholder="Enter custom amount"
                   className="donate-custom-amount-input"
                   value={customAmount}
                   onChange={(e) => {
                     setCustomAmount(e.target.value);
                     setSelectedAmount(null);
+                    clearError('amount');
                   }}
                   disabled={isBusy}
                 />
               </div>
+              {fieldErrors.amount && <p className="donate-form-error">{fieldErrors.amount}</p>}
             </div>
 
             {/* Full Name */}
@@ -197,10 +231,13 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
                 placeholder="Enter Name"
                 className="donate-form-input"
                 value={formData.fullName}
-                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                required
+                onChange={(e) => {
+                  setFormData({ ...formData, fullName: e.target.value });
+                  clearError('fullName');
+                }}
                 disabled={isBusy}
               />
+              {fieldErrors.fullName && <p className="donate-form-error">{fieldErrors.fullName}</p>}
             </div>
 
             {/* Email */}
@@ -211,10 +248,13 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
                 placeholder="Enter Email ID"
                 className="donate-form-input"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                required
+                onChange={(e) => {
+                  setFormData({ ...formData, email: e.target.value });
+                  clearError('email');
+                }}
                 disabled={isBusy}
               />
+              {fieldErrors.email && <p className="donate-form-error">{fieldErrors.email}</p>}
             </div>
 
             {/* Mobile */}
@@ -224,14 +264,20 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
                 <div className="donate-country-code">+91</div>
                 <input
                   type="tel"
+                  inputMode="numeric"
+                  maxLength={15}
+                  autoComplete="tel-national"
                   placeholder="Enter Mobile Number"
                   className="donate-form-input donate-form-input--mobile"
                   value={formData.mobile}
-                  onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
-                  required
+                  onChange={(e) => {
+                    setFormData({ ...formData, mobile: e.target.value });
+                    clearError('mobile');
+                  }}
                   disabled={isBusy}
                 />
               </div>
+              {fieldErrors.mobile && <p className="donate-form-error">{fieldErrors.mobile}</p>}
               <p className="donate-form-note">All Donation updates will be sent through this number*</p>
             </div>
 
@@ -242,10 +288,13 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
                 type="text"
                 className="donate-form-input"
                 value={formData.address}
-                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                required
+                onChange={(e) => {
+                  setFormData({ ...formData, address: e.target.value });
+                  clearError('address');
+                }}
                 disabled={isBusy}
               />
+              {fieldErrors.address && <p className="donate-form-error">{fieldErrors.address}</p>}
             </div>
 
             {/* Nationality */}
@@ -285,11 +334,16 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
               <input
                 type="text"
                 className="donate-form-input"
+                maxLength={10}
+                autoCapitalize="characters"
                 value={formData.pan}
-                onChange={(e) => setFormData({ ...formData, pan: e.target.value })}
-                required
+                onChange={(e) => {
+                  setFormData({ ...formData, pan: e.target.value });
+                  clearError('pan');
+                }}
                 disabled={isBusy}
               />
+              {fieldErrors.pan && <p className="donate-form-error">{fieldErrors.pan}</p>}
             </div>
 
             {status === 'failure' && errorMessage && (

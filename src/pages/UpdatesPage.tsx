@@ -1,7 +1,7 @@
 import React from 'react';
-import womensDay from '../assets/images/updates/womens-day.jpg';
-import environmentDay from '../assets/images/updates/environment-day.jpg';
-import walkForFreedom from '../assets/images/updates/walk-for-freedom.jpg';
+import womensDay from '../assets/images/updates/womens-day.webp';
+import environmentDay from '../assets/images/updates/environment-day.webp';
+import walkForFreedom from '../assets/images/updates/walk-for-freedom.webp';
 import './UpdatesPage.css';
 
 const freedomQuotes = [

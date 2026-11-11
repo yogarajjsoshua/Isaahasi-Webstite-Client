@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { DonateModal } from '../DonateModal';
 import './Header.css';
 import imgMenuItemArrow from '../../assets/icons/header/menu-arrow.svg';
-import imgIndiaLogoIsaahasiAcademyIndiaFoundation4 from '../../assets/images/header/logo.png';
+import imgIndiaLogoIsaahasiAcademyIndiaFoundation4 from '../../assets/images/header/logo.webp';
 
 type DropdownItem = {
   label: string;
