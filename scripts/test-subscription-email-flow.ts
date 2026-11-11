@@ -103,7 +103,7 @@ function previewEnv() {
     '  RESEND_API_KEY:',
     apiKey ? `${JSON.stringify(apiKey.slice(0, 10))}... (set, ${apiKey.length} chars)` : '(not set)',
   );
-  // RESEND_FROM_EMAIL is a sender address, not a secret, so it's fine to
+// RESEND_FROM_EMAIL is a sender address, not a secret, so it's fine to
   // print in full.
   console.log('  RESEND_FROM_EMAIL:', fromEmail || '(not set)');
 }

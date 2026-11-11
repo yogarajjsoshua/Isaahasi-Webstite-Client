@@ -118,9 +118,9 @@ const LAYOUT = {
   signatureBox: { left: 1460, top: 1000, right: 1940, bottom: 1190 },
 } as const;
 
-const DEFAULT_FONT_SIZE = 20;
-const MIN_FONT_SIZE = 10;
-const AMOUNT_FONT_SIZE = 40;
+const DEFAULT_FONT_SIZE = 48;
+const MIN_FONT_SIZE = 24;
+const AMOUNT_FONT_SIZE = 60;
 
 // ---------------------------------------------------------------------------
 // Coordinate transform + low-level drawing helpers
