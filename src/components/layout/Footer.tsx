@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Footer.css';
 import isahasiLogoFooter from '../../assets/images/footer/logo.png';
 import instagramIcon from '../../assets/icons/footer/instagram.svg';
 import linkedinIcon from '../../assets/icons/footer/linkedin.svg';
+import { DonateModal } from '../DonateModal';
 
 export const Footer: React.FC = () => {
+  const [isDonateModalOpen, setIsDonateModalOpen] = useState(false);
+
   return (
+    <>
     <footer className="footer-wrapper">
       <div className="footer-top">
         {/* Left Section - About */}
@@ -31,10 +36,10 @@ export const Footer: React.FC = () => {
         <div className="footer-get-involved">
           <h3 className="footer-section-title">Get involved</h3>
           <ul className="footer-links">
-            <li><a href="#">Reports and Compliance</a></li>
-            <li><a href="#">Fundraise, Sponsor, Partner</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><button type="button">Donate</button></li>
+            <li><Link to="/compliance">Reports and Compliance</Link></li>
+            <li><Link to="/partner">Fundraise, Sponsor, Partner</Link></li>
+            <li><Link to="/careers">Careers</Link></li>
+            <li><button type="button" onClick={() => setIsDonateModalOpen(true)}>Donate</button></li>
           </ul>
         </div>
 
@@ -60,11 +65,15 @@ export const Footer: React.FC = () => {
       {/* Bottom Section */}
       <div className="footer-bottom">
         <div className="footer-legal">
-          <a href="#">Privacy policy</a>
+          <Link to="/privacy-policy">Privacy policy</Link>
           <span>Terms of Use</span>
         </div>
         <p className="footer-copyright">© 2026, All Rights Reserved</p>
       </div>
     </footer>
+    {isDonateModalOpen && (
+      <DonateModal onClose={() => setIsDonateModalOpen(false)} />
+    )}
+    </>
   );
 };

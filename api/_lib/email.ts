@@ -8,6 +8,9 @@
 
 import { Resend } from "resend";
 
+// CC'd on every receipt email (one-time and monthly/subscription).
+const RECEIPT_CC_EMAIL = "info.isaahasi@gmail.com";
+
 export interface ReceiptEmailInput {
   to: string;
   donorName: string;
@@ -110,6 +113,7 @@ export async function sendReceiptEmail(input: ReceiptEmailInput): Promise<SendRe
     {
       from: `iSaahasi Academy India Foundation <${fromEmail}>`,
       to: input.to,
+      ...(input.to.trim().toLowerCase() !== RECEIPT_CC_EMAIL ? { cc: RECEIPT_CC_EMAIL } : {}),
       subject,
       html,
       attachments: [

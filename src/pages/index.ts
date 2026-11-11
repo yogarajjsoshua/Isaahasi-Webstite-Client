@@ -9,3 +9,4 @@ export { PartnerPage } from './PartnerPage';
 export { VolunteerPage } from './VolunteerPage';
 export { PrivacyPolicyPage } from './PrivacyPolicyPage';
 export { CompliancePage } from './CompliancePage';
+export { CareersPage } from './CareersPage';

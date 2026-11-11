@@ -131,7 +131,8 @@ export const Header: React.FC = () => {
     { label: 'Our Story', path: '/our-story' },
     { label: 'Our Team', path: '/our-team' },
     { label: 'Vision', path: '/vision' },
-    { label: 'Compliance', path: '/compliance' }
+    { label: 'Compliance', path: '/compliance' },
+    { label: 'Careers', path: '/careers' }
   ];
 
   const ourWorkItems: DropdownItem[] = [

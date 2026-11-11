@@ -11,6 +11,7 @@ import { PartnerPage } from './pages/PartnerPage';
 import { VolunteerPage } from './pages/VolunteerPage';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
 import { CompliancePage } from './pages/CompliancePage';
+import { CareersPage } from './pages/CareersPage';
 import './styles/globals.css';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="volunteer" element={<VolunteerPage />} />
           <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="compliance" element={<CompliancePage />} />
+          <Route path="careers" element={<CareersPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

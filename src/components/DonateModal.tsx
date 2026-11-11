@@ -165,7 +165,7 @@ export const DonateModal: React.FC<DonateModalProps> = ({ onClose }) => {
                     className={`donate-amount-btn ${selectedAmount === amount ? 'donate-amount-btn--selected' : ''}`}
                     onClick={() => {
                       setSelectedAmount(amount);
-                      setCustomAmount('');
+                      setCustomAmount(String(amount));
                     }}
                     disabled={isBusy}
                   >
