@@ -52,7 +52,7 @@ export const Footer: React.FC = () => {
             <a href="#" aria-label="Instagram">
               <img alt="Instagram" src={instagramIcon} />
             </a>
-            <a href="#" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/in/isaahasi-academy-india-foundation-555478449" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
               <img alt="LinkedIn" src={linkedinIcon} />
             </a>
           </div>
