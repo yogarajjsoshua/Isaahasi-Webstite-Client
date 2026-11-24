@@ -138,8 +138,8 @@ export const HomePage: React.FC = () => {
       <section className="quote-section">
         <div className="quote-content">
           <blockquote className="quote-text">
-            <p className="quote-line">"FOR SURVIVORS OF TRAFFICKING FREEDOM BEGINS WITH BEING RESCUED...</p>
-            <p className="quote-line quote-line--indented">...BEING RESCUED IS ONLY THE BEGINNING"</p>
+            <p className="quote-line">For survivors of trafficking freedom begins with being rescued...</p>
+            <p className="quote-line quote-line--indented">...being rescued is only the beginning.</p>
           </blockquote>
         </div>
       </section>

@@ -130,30 +130,23 @@ export const Header: React.FC = () => {
   const aboutUsItems: DropdownItem[] = [
     { label: 'Our Story', path: '/our-story' },
     { label: 'Our Team', path: '/our-team' },
-    { label: 'Vision', path: '/vision' },
-    { label: 'Compliance', path: '/compliance' },
-    { label: 'Careers', path: '/careers' }
-  ];
-
-  const ourWorkItems: DropdownItem[] = [
-    { label: 'Why Isaahasi', path: '/our-work#our-work-why' },
-    { label: 'What we Do', path: '/our-work#our-work-what' }
+    { label: 'Our Work', path: '/our-work' }
   ];
 
   const storiesItems: DropdownItem[] = [
     { label: 'Her Story', path: '/her-story' },
-    { label: 'Updates', path: '/updates' }
+    { label: 'Newsletter', path: '/updates' }
   ];
 
   const getInvolvedItems: DropdownItem[] = [
     { label: 'Volunteer', path: '/volunteer' },
     { label: 'Partner with Us', path: '/partner' },
+    { label: 'Careers', path: '/careers' },
     { label: 'Donate', onClick: () => setIsDonateModalOpen(true) }
   ];
 
   const mobileSections = [
     { key: 'about', label: 'About Us', items: aboutUsItems },
-    { key: 'work', label: 'Our Work', items: ourWorkItems },
     { key: 'stories', label: 'Stories', items: storiesItems },
     { key: 'involved', label: 'Get Involved', items: getInvolvedItems },
   ];
@@ -185,7 +178,6 @@ export const Header: React.FC = () => {
               </span>
             </Link>
             <MenuItem text="About Us" dropdownItems={aboutUsItems} />
-            <MenuItem text="Our Work" dropdownItems={ourWorkItems} />
             <MenuItem text="Stories" dropdownItems={storiesItems} />
             <MenuItem text="Get Involved" dropdownItems={getInvolvedItems} />
           </div>

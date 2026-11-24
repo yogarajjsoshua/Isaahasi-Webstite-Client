@@ -38,20 +38,8 @@
   line-height: 20px;
 }
 
-.footer-info-list li {
-  position: relative;
-  padding-left: 21px;
-}
-
-.footer-info-list li::before {
-  content: '';
-  position: absolute;
-  left: 4px;
-  top: 8px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: #fff;
+.footer-info-list p {
+  margin: 0;
 }
 
 .footer-info-list strong {
@@ -72,6 +60,10 @@
 
 .footer-contact-title {
   margin-bottom: 4px;
+}
+
+.footer-contact .footer-social {
+  margin-top: 16px;
 }
 
 /* Center - Get Involved */

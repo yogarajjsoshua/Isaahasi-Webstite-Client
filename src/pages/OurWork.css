@@ -51,13 +51,23 @@
   line-height: 100px;
   color: rgba(0, 0, 0, 0.23);
   text-transform: uppercase;
-  text-align: center;
-  margin: 0 0 24px;
+  text-align: left;
+  margin: 0 0 40px;
+}
+
+.our-work-why .our-work-section-title {
+  max-width: 1084px;
+  margin: 0 auto 40px;
+}
+
+.our-work-what .our-work-section-title {
+  max-width: 1200px;
+  margin: 0 auto 40px;
 }
 
 /* Why Section */
 .our-work-why {
-  padding: 96px 144px 64px;
+  padding: 96px 144px;
   scroll-margin-top: 174px;
 }
 
@@ -113,17 +123,13 @@
   font-size: 20px;
   line-height: 35px;
   color: #000;
-  text-align: justify;
+  text-align: left;
   list-style: disc;
   padding-left: 24px;
   margin: 0;
 }
 
 .our-work-bridge-list li {
-  margin-bottom: 20px;
-}
-
-.our-work-bridge-list li:last-child {
   margin-bottom: 0;
 }
 
@@ -143,7 +149,7 @@
 
 /* What We Do Section */
 .our-work-what {
-  padding: 64px 144px;
+  padding: 96px 144px;
   scroll-margin-top: 174px;
 }
 
@@ -217,8 +223,9 @@
   line-height: 100px;
   color: rgba(0, 0, 0, 0.23);
   text-transform: uppercase;
-  text-align: center;
-  margin: 0 0 40px;
+  text-align: left;
+  max-width: 1200px;
+  margin: 0 auto 40px;
 }
 
 .pillar-detail-row {
@@ -273,51 +280,18 @@
   margin: 40px auto 0;
 }
 
-/* Health section (Figma 1624:1037) */
-.pillar-detail--health {
-  background-color: #fff;
-  padding-top: 69px;
-  padding-bottom: 145px;
-}
-
-.pillar-detail--health .pillar-detail-title {
-  max-width: 1108px;
-  margin: 0 auto 21px;
-  text-align: left;
-}
-
-.pillar-detail--health .pillar-detail-row {
+/* Health & Employment: images fill the row width */
+.pillar-detail--wide .pillar-detail-title,
+.pillar-detail--wide .pillar-detail-row {
   max-width: 1108px;
 }
 
-.pillar-detail--health .pillar-detail-images {
+.pillar-detail--wide .pillar-detail-images {
   flex: 1 1 100%;
   gap: 20px;
 }
 
-.pillar-detail--health .pillar-detail-images img {
-  flex: 1 1 0;
-  min-width: 0;
-  height: auto;
-  aspect-ratio: 544 / 387;
-  border-radius: 0;
-}
-
-.pillar-detail--health .pillar-detail-text--full {
-  margin-top: 58px;
-}
-
-/* Employment section: images fill the row width */
-.pillar-detail--beige .pillar-detail-row {
-  max-width: 1108px;
-}
-
-.pillar-detail--beige .pillar-detail-images {
-  flex: 1 1 100%;
-  gap: 20px;
-}
-
-.pillar-detail--beige .pillar-detail-images img {
+.pillar-detail--wide .pillar-detail-images img {
   flex: 1 1 0;
   min-width: 0;
   height: auto;
@@ -411,14 +385,9 @@
     height: 260px;
   }
 
-  .pillar-detail--health .pillar-detail-images img,
-  .pillar-detail--beige .pillar-detail-images img {
+  .pillar-detail--wide .pillar-detail-images img {
     flex: none;
     width: 100%;
     height: auto;
-  }
-
-  .pillar-detail--health .pillar-detail-text--full {
-    margin-top: 32px;
   }
 }

@@ -171,7 +171,6 @@
   line-height: 32px;
   color: var(--color-text-primary);
   margin: 0;
-  text-transform: lowercase;
 }
 
 .quote-line {

@@ -17,7 +17,7 @@ export const UpdatesPage: React.FC = () => {
   return (
     <div className="updates-page">
       <section className="updates-hero">
-        <h1 className="updates-title">Updates</h1>
+        <h1 className="updates-title">Newsletter</h1>
       </section>
 
       <div className="updates-grid">

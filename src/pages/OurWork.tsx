@@ -83,7 +83,7 @@ export const OurWork: React.FC = () => {
       {/* Hero Section */}
       <section className="our-work-hero">
         <div className="our-work-hero-quote">
-          <p>"For every survivor of trafficking, being rescued is only the first step toward freedom"</p>
+          <p>Proud of who we are, grateful for how far we've come, and hopeful for all that we are yet to become.</p>
         </div>
         <div className="our-work-hero-image">
           <img alt="" src={imgRectangle77} />
@@ -144,7 +144,7 @@ export const OurWork: React.FC = () => {
       </section>
 
       {/* Education Detail */}
-      <section className="pillar-detail">
+      <section className="pillar-detail pillar-detail--beige">
         <h3 className="pillar-detail-title">Education</h3>
         <div className="pillar-detail-row pillar-detail-row--reverse">
           <div className="pillar-detail-images pillar-detail-images--single">
@@ -159,7 +159,7 @@ export const OurWork: React.FC = () => {
       </section>
 
       {/* Health Detail */}
-      <section className="pillar-detail pillar-detail--health">
+      <section className="pillar-detail pillar-detail--wide">
         <h3 className="pillar-detail-title">Health</h3>
         <div className="pillar-detail-row">
           <div className="pillar-detail-images">
@@ -175,7 +175,7 @@ export const OurWork: React.FC = () => {
       </section>
 
       {/* Community Detail */}
-      <section className="pillar-detail">
+      <section className="pillar-detail pillar-detail--beige">
         <h3 className="pillar-detail-title">Community</h3>
         <div className="pillar-detail-row pillar-detail-row--reverse">
           <div className="pillar-detail-images pillar-detail-images--single">
@@ -190,7 +190,7 @@ export const OurWork: React.FC = () => {
       </section>
 
       {/* Employment Detail */}
-      <section className="pillar-detail pillar-detail--beige">
+      <section className="pillar-detail pillar-detail--wide">
         <h3 className="pillar-detail-title">Employment</h3>
         <div className="pillar-detail-row">
           <div className="pillar-detail-images">

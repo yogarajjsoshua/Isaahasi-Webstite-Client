@@ -15,20 +15,28 @@ export const Footer: React.FC = () => {
       <div className="footer-top">
         {/* Left Section - About */}
         <div className="footer-about">
-          <ul className="footer-info-list">
-            <li>
+          <div className="footer-info-list">
+            <p>
               <strong>iSaahasi Academy India Foundation is registered as a non-profit organization</strong> under Section 8(1) of the Companies Act 2013 - Registration Number CIN: U93090MH2016NPL284468 and under Section 80G of India's Income Tax Act 1961.
-            </li>
-            <li>
+            </p>
+            <p>
               <strong>iSaahasi Academy India Foundation</strong> is a part of International Sanctuary globally which has been serving survivors of trafficking since 2007.
-            </li>
-          </ul>
+            </p>
+          </div>
 
           {/* Contact Info */}
           <div className="footer-contact">
             <p className="footer-contact-title">Contact</p>
             <p>Email : isaahasiindia@gmail.com</p>
             <p>Phone : +91 9920852249</p>
+            <div className="footer-social">
+              <a href="https://www.instagram.com/isaahasiacademyindiafoundation/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <img alt="Instagram" src={instagramIcon} />
+              </a>
+              <a href="https://www.linkedin.com/company/isaahasi-academy-india-foundation/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <img alt="LinkedIn" src={linkedinIcon} />
+              </a>
+            </div>
           </div>
         </div>
 
@@ -37,7 +45,7 @@ export const Footer: React.FC = () => {
           <h3 className="footer-section-title">Get involved</h3>
           <ul className="footer-links">
             <li><Link to="/compliance">Reports and Compliance</Link></li>
-            <li><Link to="/partner">Fundraise, Sponsor, Partner</Link></li>
+            <li><Link to="/partner">Partner</Link></li>
             <li><Link to="/careers">Careers</Link></li>
             <li><button type="button" onClick={() => setIsDonateModalOpen(true)}>Donate</button></li>
           </ul>
@@ -47,14 +55,6 @@ export const Footer: React.FC = () => {
         <div className="footer-logo-section">
           <div className="footer-logo">
             <img alt="iSAAHASi Academy India Foundation" src={isahasiLogoFooter} />
-          </div>
-          <div className="footer-social">
-            <a href="#" aria-label="Instagram">
-              <img alt="Instagram" src={instagramIcon} />
-            </a>
-            <a href="https://www.linkedin.com/in/isaahasi-academy-india-foundation-555478449" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-              <img alt="LinkedIn" src={linkedinIcon} />
-            </a>
           </div>
         </div>
       </div>
